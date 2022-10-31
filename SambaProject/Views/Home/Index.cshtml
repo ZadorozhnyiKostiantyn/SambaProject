@@ -1,6 +1,15 @@
-﻿<div class=" control-section">
+﻿@using Syncfusion.EJ2.FileManager
+<a href=@Url.RouteUrl("AdminPanel")>Admin Panel</a>
+
+@{
+    var uploadSetings = new FileManagerUploadSettings();
+    uploadSetings.MaxFileSize = 500000000;
+    uploadSetings.DirectoryUpload = true;
+}
+
+<div class=" control-section">
     <div class="sample-container">
-        <ejs-filemanager id="filemanager" allowDragAndDrop="true" allowMultiSelection="true">
+        <ejs-filemanager id="filemanager" allowDragAndDrop="true" allowMultiSelection="true" uploadSettings=@uploadSetings>
             <e-filemanager-ajaxsettings url="/Home/FileOperations"
                                         downloadUrl="/Home/Download"
                                         uploadUrl="/Home/Upload"
@@ -9,3 +18,5 @@
         </ejs-filemanager>
     </div>
 </div>
+
+<script src="~/js/site.js"></script>

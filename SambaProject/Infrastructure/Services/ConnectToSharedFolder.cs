@@ -2,7 +2,7 @@
 using System.Net;
 using System.Runtime.InteropServices;
 
-namespace SambaProject
+namespace SambaProject.Infrastructure.Services
 {
     public class ConnectToSharedFolder : IDisposable
     {
@@ -66,10 +66,10 @@ namespace SambaProject
             public ResourceType ResourceType;
             public ResourceDisplaytype DisplayType;
             public int Usage;
-            public string LocalName;
-            public string RemoteName;
-            public string Comment;
-            public string Provider;
+            public string LocalName = null!;
+            public string RemoteName = null!;
+            public string Comment = null!;
+            public string Provider = null!;
         }
 
         public enum ResourceScope : int

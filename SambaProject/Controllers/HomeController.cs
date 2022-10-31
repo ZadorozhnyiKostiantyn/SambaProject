@@ -1,35 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using SambaProject.Models;
 using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Newtonsoft.Json;
 using Syncfusion.EJ2.FileManager.Base;
-using System.Net;
+using SambaProject.Infrastructure.Services;
 
 namespace SambaProject.Controllers
 {
     public class HomeController : Controller
     {
-        public PhysicalFileProvider operation;
-        private string networkPath = $"\\\\192.168.0.102\\SMBDrive";
-        private NetworkCredential credentials = new NetworkCredential("user", "user");
+        private readonly PhysicalFileProvider operation;
+        private readonly NetworkConnectionModel connection;
 
         public HomeController()
         {
             this.operation = new PhysicalFileProvider();
-            this.operation.RootFolder(networkPath);
+            this.connection = new NetworkConnectionModel();
+            this.operation.RootFolder(connection.NetworkPath);
         }
 
         public object FileOperations([FromBody] FileManagerDirectoryContent args)
         {
-            using(new ConnectToSharedFolder(networkPath, credentials))
+            using(new ConnectToSharedFolder(connection.NetworkPath, connection.Credentials))
             {
-                var fullPath = (networkPath + args.Path).Replace("/", "\\");
+                var fullPath = (connection.NetworkPath + args.Path).Replace("/", "\\");
                 if (args.Action == "delete" || args.Action == "rename")
                 {
                     if ((args.TargetPath == null) && (args.Path == ""))
@@ -96,28 +92,58 @@ namespace SambaProject.Controllers
         }
 
         // uploads the file(s) into a specified path
+        //public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
+        //{
+        //    using (new ConnectToSharedFolder(connection.NetworkPath, connection.Credentials))
+        //    {
+        //        FileManagerResponse uploadResponse;
+        //        uploadResponse = operation.Upload(path, uploadFiles, action, null);
+        //        if (uploadResponse.Error != null)
+        //        {
+        //            Response.Clear();
+        //            Response.ContentType = "application/json; charset=utf-8";
+        //            Response.StatusCode = Convert.ToInt32(uploadResponse.Error.Code);
+        //            Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = uploadResponse.Error.Message;
+        //        }
+        //        return Content("");
+        //    }
+        //}
         public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
         {
-            using(new ConnectToSharedFolder(networkPath, credentials))
+            // Here we have restricted the upload operation for our online samples
+            using (new ConnectToSharedFolder(connection.NetworkPath, connection.Credentials))
             {
                 FileManagerResponse uploadResponse;
-                uploadResponse = operation.Upload(path, uploadFiles, action, null);
-                if (uploadResponse.Error != null)
+                foreach (var file in uploadFiles)
                 {
-                    Response.Clear();
-                    Response.ContentType = "application/json; charset=utf-8";
-                    Response.StatusCode = Convert.ToInt32(uploadResponse.Error.Code);
-                    Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = uploadResponse.Error.Message;
+                    var folders = (file.FileName).Split('/');
+                    Console.WriteLine(folders);
+                    // checking the folder upload
+                    if (folders.Length > 1)
+                    {
+                        for (var i = 0; i < folders.Length - 1; i++)
+                        {
+                            Console.WriteLine(folders[i]);
+                            string newDirectoryPath = Path.Combine(path, folders[i]);
+                            if (!Directory.Exists(newDirectoryPath))
+                            {
+                                this.operation.ToCamelCase(this.operation.Create(path, folders[i]));
+                            }
+                            path += folders[i] + "/";
+                        }
+                    }
                 }
+                // Invoking upload operation with the required paramaters
+                // path - Current path where the file is to uploaded; uploadFiles - Files to be uploaded; action - name of the operation(upload)
+                uploadResponse = operation.Upload(path, uploadFiles, action, null);
                 return Content("");
             }
-            
         }
 
         // downloads the selected file(s) and folder(s)
         public IActionResult Download(string downloadInput)
         {
-            using (new ConnectToSharedFolder(networkPath, credentials))
+            using (new ConnectToSharedFolder(connection.NetworkPath, connection.Credentials))
             {
                 FileManagerDirectoryContent args = JsonConvert.DeserializeObject<FileManagerDirectoryContent>(downloadInput);
                 return operation.Download(args.Path, args.Names, args.Data);
@@ -127,12 +153,13 @@ namespace SambaProject.Controllers
         // gets the image(s) from the given path
         public IActionResult GetImage(FileManagerDirectoryContent args)
         {
-            using(new ConnectToSharedFolder(networkPath, credentials))
+            using(new ConnectToSharedFolder(connection.NetworkPath, connection.Credentials))
             {
                 return this.operation.GetImage(args.Path, args.Id, false, null, null);
             }
         }
 
+        [Route("ShareFolder")]
         public IActionResult Index()
         {
             return View();
