@@ -1,0 +1,119 @@
+﻿@model SambaProject.Models.AdminModel
+
+@{
+    Layout = null;
+    var selectList = new SelectList(new List<SelectListItem>
+    {
+        new SelectListItem {Text = "Owner", Value="0"},
+        new SelectListItem {Text = "Admin", Value="1"},
+        new SelectListItem {Text = "Write", Value="2"},
+        new SelectListItem {Text = "Read", Value="3"},
+    }, "Value", "Text");
+};
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/register.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/crud.css"/>
+</head>
+
+<body>
+    <div class="register-box">
+        <h2>Register</h2>
+        <form method="post" asp-controller="Administration" asp-action="CheckRegister">
+            <div class="user-box">
+                <input asp-for="User.Username" type="text" name="username" id="username" required>
+                <label>Username</label>
+            </div>
+            
+            <div class="user-box">
+                <input asp-for="User.Password" type="password" name="password" id="password" required>
+                <label>Password</label>
+            </div>
+            
+            <div class="role-select">
+                <label>Choose Access Role:</label>
+                @Html.DropDownList("AccessRoleId", selectList)
+            </div>
+            
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    
+    <div class="container">
+        
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Manage Users</h2>
+                    </div>
+                    <div class="col-sm-6"> 
+                        <form class="search-container">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit"><iconify-icon icon="fe:search"></iconify-icon></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            @*<div style="height: 400px; overflow: auto">*@
+            <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span class="custom-checkbox">
+                                    <input type="checkbox" id="selectAll">
+                                    <label for="selectAll"></label>
+                                </span>
+                            </th>
+                            <th>Username</th>
+                            <th>Access_Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model.Users)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                        <label for="checkbox1"></label>
+                                    </span>
+                                </td>
+                                <td>@user.Username</td>
+                                @switch (@user.AccessRoleId)
+                                {
+                                    case 1:
+                                        <td>Owner</td>
+                                        break;
+                                    case 2:
+                                        <td>Admin</td>
+                                        break;
+                                    case 3:
+                                        <td>Write</td>
+                                        break;
+                                    default:
+                                        <td>Read</td>
+                                        break;
+                                }
+                                <td>
+                                    <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit"><iconify-icon icon="eva:edit-outline" width="27" height="27"></iconify-icon></i></a>
+                                <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete"><iconify-icon icon="mingcute:delete-2-line" width="25" height="25"></iconify-icon></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            @*</div>*@
+        </div>
+    </div>
+
+<script src="~/js/site.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    
+</body>
+</html>

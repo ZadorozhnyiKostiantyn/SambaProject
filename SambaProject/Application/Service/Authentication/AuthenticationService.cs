@@ -18,6 +18,28 @@ namespace SambaProject.Application.Service.Authentication
             _passwordHasher = passwordHasher;
         }
 
+        public async Task Register(string username, string password, int roleId)
+        {
+            // 1. Validate the user doesn't exist
+            if (await _userRepository.GetUserByUserNameAsync(username) is not null)
+            {
+                throw new Exception("User with given username already exists.");
+            }
+
+            // 2. Creat user (generate unique ID) and Persist to DB
+            var user = new User
+            {
+                Username = username,
+                Password = password,
+                AccessRoleId = roleId,
+            };
+            user.Password = _passwordHasher.HashPassword(user, password);
+
+            await _userRepository.AddUserAsync(user);
+
+            // 3. Create JWT token
+        }
+
         public async Task<User> Login(string userName, string password)
         {
             // 1. Validate the user exists
