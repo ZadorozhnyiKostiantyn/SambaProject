@@ -1,0 +1,30 @@
+﻿@model User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/login.css" />
+</head>
+
+<body>
+    <div class="login-box">
+    <h2>Samba</h2>
+    <form method="post" asp-controller="Authentication" asp-action="CheckLogin">
+        <div class="user-box">
+            <input asp-for="Username" type="text" name="username" required>
+            <label>Username</label>
+        </div>
+        <div class="user-box">
+            <input asp-for="Password" type="password" name="Password" required>
+            <label>Password</label>
+        </div>
+        <button type="submit">
+            Submit
+        </button>
+    </form>
+</div>
+</body>
+</html>

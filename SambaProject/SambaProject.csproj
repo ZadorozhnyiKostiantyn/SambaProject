@@ -7,44 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Application\Common\Interfaces\Authentication\**" />
-    <Compile Remove="Application\Common\Interfaces\Services\**" />
-    <Compile Remove="Application\Service\Authentication\**" />
     <Compile Remove="Contracts\**" />
-    <Compile Remove="Infrastructure\Authentication\**" />
     <Compile Remove="Testing\**" />
-    <Compile Remove="Views\Administration\**" />
-    <Compile Remove="Views\Authentication\**" />
-    <Content Remove="Application\Common\Interfaces\Authentication\**" />
-    <Content Remove="Application\Common\Interfaces\Services\**" />
-    <Content Remove="Application\Service\Authentication\**" />
     <Content Remove="Contracts\**" />
-    <Content Remove="Infrastructure\Authentication\**" />
     <Content Remove="Testing\**" />
-    <Content Remove="Views\Administration\**" />
-    <Content Remove="Views\Authentication\**" />
-    <EmbeddedResource Remove="Application\Common\Interfaces\Authentication\**" />
-    <EmbeddedResource Remove="Application\Common\Interfaces\Services\**" />
-    <EmbeddedResource Remove="Application\Service\Authentication\**" />
     <EmbeddedResource Remove="Contracts\**" />
-    <EmbeddedResource Remove="Infrastructure\Authentication\**" />
     <EmbeddedResource Remove="Testing\**" />
-    <EmbeddedResource Remove="Views\Administration\**" />
-    <EmbeddedResource Remove="Views\Authentication\**" />
-    <None Remove="Application\Common\Interfaces\Authentication\**" />
-    <None Remove="Application\Common\Interfaces\Services\**" />
-    <None Remove="Application\Service\Authentication\**" />
     <None Remove="Contracts\**" />
-    <None Remove="Infrastructure\Authentication\**" />
     <None Remove="Testing\**" />
-    <None Remove="Views\Administration\**" />
-    <None Remove="Views\Authentication\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Controllers\AdministrationController.cs" />
-    <Compile Remove="Controllers\AuthenticationController.cs" />
-    <Compile Remove="Infrastructure\Services\DateTimeProvider.cs" />
   </ItemGroup>
 
   <ItemGroup>

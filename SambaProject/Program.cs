@@ -25,7 +25,7 @@ var app = builder.Build();
 
     app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Authentication}/{action=Login}/{id?}");
 
     app.Run();
 }
