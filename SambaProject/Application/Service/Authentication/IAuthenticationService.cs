@@ -1,5 +1,4 @@
-﻿using SambaProject.Data.Enum;
-using SambaProject.Models;
+﻿using SambaProject.Models;
 
 namespace SambaProject.Application.Service.Authentication
 {

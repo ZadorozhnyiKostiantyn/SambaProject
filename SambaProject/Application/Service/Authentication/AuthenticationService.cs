@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using SambaProject.Application.Common.Interfaces.Authentication;
 using SambaProject.Application.Common.Interfaces.Persistence;
 using SambaProject.Models;
 
@@ -6,11 +7,13 @@ namespace SambaProject.Application.Service.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
 
-        public AuthenticationService(IUserRepository userReporitory, IPasswordHasher<User> passwordHasher)
+        public AuthenticationService(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userReporitory, IPasswordHasher<User> passwordHasher)
         {
+            _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userReporitory;
             _passwordHasher = passwordHasher;
         }
@@ -30,6 +33,7 @@ namespace SambaProject.Application.Service.Authentication
             }
 
             // 3. Create JWT Token
+
             return user;
 
         }
