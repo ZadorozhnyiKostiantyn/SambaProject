@@ -2,10 +2,9 @@
 using SambaProject.Models;
 using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Http.Features;
 using Newtonsoft.Json;
 using Syncfusion.EJ2.FileManager.Base;
-using SambaProject.Infrastructure.Services;
+using SambaProject.Service.Connection;
 
 namespace SambaProject.Controllers
 {

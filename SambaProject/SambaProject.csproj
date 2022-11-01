@@ -7,14 +7,38 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\**" />
+    <Compile Remove="Change\**" />
     <Compile Remove="Contracts\**" />
+    <Compile Remove="Data\Repositories\**" />
+    <Compile Remove="Migrations\**" />
     <Compile Remove="Testing\**" />
+    <Content Remove="Application\**" />
+    <Content Remove="Change\**" />
     <Content Remove="Contracts\**" />
+    <Content Remove="Data\Repositories\**" />
+    <Content Remove="Migrations\**" />
     <Content Remove="Testing\**" />
+    <EmbeddedResource Remove="Application\**" />
+    <EmbeddedResource Remove="Change\**" />
     <EmbeddedResource Remove="Contracts\**" />
+    <EmbeddedResource Remove="Data\Repositories\**" />
+    <EmbeddedResource Remove="Migrations\**" />
     <EmbeddedResource Remove="Testing\**" />
+    <None Remove="Application\**" />
+    <None Remove="Change\**" />
     <None Remove="Contracts\**" />
+    <None Remove="Data\Repositories\**" />
+    <None Remove="Migrations\**" />
     <None Remove="Testing\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="20221025231040_FirstMigration.cs" />
+    <Compile Remove="20221025231040_FirstMigration.Designer.cs" />
+    <Compile Remove="20221028195143_SecondMigration.cs" />
+    <Compile Remove="20221028195143_SecondMigration.Designer.cs" />
+    <Compile Remove="ApplicationDbContextModelSnapshot.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,11 +49,11 @@
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
     <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="20.3.0.52" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.24.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Service\" />
+    <Folder Include="Data\Configuration\" />
   </ItemGroup>
 
 </Project>

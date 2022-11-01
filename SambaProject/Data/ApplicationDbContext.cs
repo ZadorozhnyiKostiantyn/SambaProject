@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SambaProject.Models;
+using SambaProject.Data.Models;
 
 namespace SambaProject.Data
 {
@@ -7,10 +7,6 @@ namespace SambaProject.Data
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         { 
-        }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
         }
 
         public DbSet<User> Users { get; set; }

@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using SambaProject.Application;
 using SambaProject.Data;
-using SambaProject.Infrastructure;
+using SambaProject.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -9,8 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services
         .AddData(builder.Configuration.GetConnectionString("MySqlDatabase"))
-        .AddApplication()
-        .AddInfrastructure();
+        .AddService();
 }
 
 

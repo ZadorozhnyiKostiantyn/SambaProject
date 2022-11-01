@@ -1,4 +1,6 @@
-﻿namespace SambaProject.Models
+﻿using SambaProject.Data.Models;
+
+namespace SambaProject.Models
 {
     public class AdminModel
     {

@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SambaProject.Application.Common.Interfaces.Persistence;
-using SambaProject.Application.Service.Authentication;
+using SambaProject.Data.Models;
+using SambaProject.Data.Repository;
 using SambaProject.Models;
+using SambaProject.Service.Authentication;
 
 namespace SambaProject.Controllers
 {

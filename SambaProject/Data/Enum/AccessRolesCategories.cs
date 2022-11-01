@@ -7,5 +7,4 @@
         Write,
         Read,
     }
-
 }
