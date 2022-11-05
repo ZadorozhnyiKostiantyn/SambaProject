@@ -1,4 +1,6 @@
-﻿.table-wrapper {
+﻿
+
+.table-wrapper {
     position: absolute;
     top: 45%;
     left: 70%;
@@ -60,6 +62,7 @@
 
 table.table tbody, table.table thead{
     display: block;
+    width: 620px;
 }
 
 table.table tbody{
@@ -82,8 +85,16 @@ table.table tr th, table.table tr td {
         width: 20px;
     }
 
+    table.table tr th:nth-child(2) {
+        width: 300px;
+    }
+
+    table.table tr th:nth-child(3) {
+        width: 200px;
+    }
+
     table.table tr th:last-child {
-        width: 70px;
+        width: 100px;
     }
 
 table.table-striped.table-hover tbody tr:hover {
@@ -115,6 +126,18 @@ table.table th i {
     cursor: pointer;
 }
 
+table.table tr td:nth-child(2) {
+    width: 280px;
+}
+
+table.table tr td:nth-child(3) {
+    width: 230px;
+}
+
+table.table tr td:nth-child(4) {
+    width: 90px;
+}
+
 table.table td:last-child i {
     opacity: 0.9;
     font-size: 22px;
@@ -129,15 +152,27 @@ table.table td a {
     outline: none !important;
 }
 
-    table.table td a:hover {
-        color: #2196F3;
-    }
+table.table td button {
+    border: none;
+    background: none;
+    display: inline-block;
+    text-decoration: none;
+    outline: none !important;
+}
+
+table.table td form {
+    all: unset !important;
+}
+
+table.table td a:hover, table.table td button:hover {
+    color: #2196F3;
+}
 
     table.table td a.edit {
         color: #FFC107;
     }
 
-    table.table td a.delete {
+    table.table td button.delete {
         color: #F44336;
         width: 20px;
     }
@@ -145,6 +180,8 @@ table.table td a {
 table.table td i {
     font-size: 19px;
 }
+
+
 
 /*.pagination {
     float: right;

@@ -27,7 +27,7 @@ namespace SambaProject.Data.Repository
         public async Task DeleteUserAsync(int userId)
         {
             
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserId == userId);
             if (user == null)
             {
                 throw new ArgumentNullException("This user is not exist");
@@ -42,6 +42,11 @@ namespace SambaProject.Data.Repository
             return users;
         }
 
+        public async Task<User?> GetUserByIdAsync(int userId)
+        {
+            return await _context.Users.SingleOrDefaultAsync(u => u.UserId == userId);
+        }
+
         public async Task<User?> GetUserByUserNameAsync(string username)
         {
             if (username is null)
@@ -52,14 +57,14 @@ namespace SambaProject.Data.Repository
             return await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
         }
 
-        public async Task UpdateUserAsync(int userId, User newData)
+        public async Task UpdateUserAsync(User newData)
         {
             if (newData == null)
             {
                 throw new ArgumentNullException("New data is null");
             }
 
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserId == userId);
+            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserId == newData.UserId);
 
             if (user == null)
             {

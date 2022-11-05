@@ -33,11 +33,38 @@ namespace SambaProject.Service.Administration
             return await _userRepository.GetAllUserAsync();
         }
 
-        public async Task UpdateUserAsync(int userId, User newData)
+        public async Task<User> GetUserByIdAsync(int userId)
         {
-            await _userRepository.UpdateUserAsync(
-                userId: userId,
-                newData: newData);
+            return await _userRepository.GetUserByIdAsync(userId);
+        }
+
+        public async Task<List<User>> SearchAsync(string query)
+        {
+            // 1. Parsing query
+            /*
+            {
+                Username: username,
+                AccessRole: accseerole
+            };
+             */
+            if(query == null)
+            {
+                throw new ArgumentNullException(nameof(query));
+            }
+
+            // 2. Get list all users
+            var listUser = await _userRepository.GetAllUserAsync();
+
+            // 3. Generate a list of users for a suitable request
+            var findListUsers = listUser;
+
+            return findListUsers;
+
+        }
+
+        public async Task UpdateUserAsync(User newData)
+        {
+            await _userRepository.UpdateUserAsync(newData: newData);
         }
     }
 }

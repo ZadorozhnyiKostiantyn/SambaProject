@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SambaProject.Data.Models;
+using SambaProject.Service.Administration;
 using SambaProject.Service.Authentication;
 
 namespace SambaProject.Service
@@ -14,6 +15,7 @@ namespace SambaProject.Service
 
             services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
