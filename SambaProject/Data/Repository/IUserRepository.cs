@@ -10,6 +10,7 @@ namespace SambaProject.Data.Repository
         public Task<List<User>> GetAllUserAsync();
         public Task UpdateUserAsync(User newData);
         public Task DeleteUserAsync(int userId);
-        
+        public Task<List<User>> SearchUsersAsync(string searchString);
+         
     }
 }

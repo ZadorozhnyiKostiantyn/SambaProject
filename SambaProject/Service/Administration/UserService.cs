@@ -1,4 +1,5 @@
-﻿using SambaProject.Data.Models;
+﻿using SambaProject.Data;
+using SambaProject.Data.Models;
 using SambaProject.Data.Repository;
 using SambaProject.Service.Authentication;
 
@@ -40,25 +41,13 @@ namespace SambaProject.Service.Administration
 
         public async Task<List<User>> SearchAsync(string query)
         {
-            // 1. Parsing query
-            /*
-            {
-                Username: username,
-                AccessRole: accseerole
-            };
-             */
-            if(query == null)
+          
+            if(String.IsNullOrEmpty(query))
             {
                 throw new ArgumentNullException(nameof(query));
             }
 
-            // 2. Get list all users
-            var listUser = await _userRepository.GetAllUserAsync();
-
-            // 3. Generate a list of users for a suitable request
-            var findListUsers = listUser;
-
-            return findListUsers;
+            return await _userRepository.SearchUsersAsync(query);
 
         }
 

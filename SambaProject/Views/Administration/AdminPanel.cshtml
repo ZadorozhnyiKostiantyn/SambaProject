@@ -36,7 +36,7 @@
                 @Html.DropDownList("AccessRoleId", selectList)
             </div>
 
-            <button type="submit">Register</button>
+            <button id="register-btn" type="submit" onclick="AddUser()">Register</button>
         </form>
     </div>
 
@@ -49,14 +49,13 @@
                         <h2>Manage Users</h2>
                     </div>
                     <div class="col-sm-6">
-                        <form class="search-container">
-                            <input type="text" placeholder="Search.." name="search">
-                            <button type="submit"><iconify-icon icon="fe:search"></iconify-icon></button>
+                        <form class="search-container" method="post">
+                            <input id="search-username" type="text" placeholder="Search.." name="search">
+                            <button id="search-btn" type="submit"><iconify-icon icon="fe:search"></iconify-icon></button>
                         </form>
                     </div>
                 </div>
             </div>
-            @*<div style="height: 400px; overflow: auto">*@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -71,7 +70,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tblUsers">
                     @foreach (var user in Model.Users)
                     {
                         <tr>
@@ -81,20 +80,21 @@
                                     <label for="checkbox1"></label>
                                 </span>
                             </td>
-                            <td>@user.Username</td>
+                            <td id="user-@user.UserId" onclick='changeTdToInput("#user-@user.UserId", "@user.Username")'>@user.Username</td>
+                            
                             @switch (@user.AccessRoleId)
                             {
                                 case 1:
-                                    <td>Owner</td>
+                                    <td id="drop-down-user-@user.UserId" onclick='changeTdToSelect("#drop-down-user-@user.UserId")'>Owner</td>
                                     break;
                                 case 2:
-                                    <td>Admin</td>
+                                    <td id="drop-down-user-@user.UserId" onclick='changeTdToSelect("#drop-down-user-@user.UserId")'>Admin</td>
                                     break;
                                 case 3:
-                                    <td>Write</td>
+                                    <td id="drop-down-user-@user.UserId" onclick='changeTdToSelect("#drop-down-user-@user.UserId")'>Write</td>
                                     break;
                                 default:
-                                    <td>Read</td>
+                                    <td id="drop-down-user-@user.UserId" onclick='changeTdToSelect("#drop-down-user-@user.UserId")'>Read</td>
                                     break;
                             }
                             <td>
@@ -114,7 +114,9 @@
             </table>
         </div>
     </div>
-
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
@@ -122,7 +124,3 @@
 
 </body>
 </html>
-
-@section Scripts{
-    <script src="~/js/site.js"></script>
-}

@@ -32,16 +32,27 @@ namespace SambaProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckRegister(User user)
         {
-            await _authenticationService.Register(
-                user.Username,
-                user.Password,
-                user.AccessRoleId);
-
+            await _authenticationService.Register(user.Username,
+                                                  user.Password,
+                                                  user.AccessRoleId);
             return RedirectToAction("AdminPanel");
         }
 
-        // DELETE: Users/Delete/5
         [HttpPost]
+        public async Task<IActionResult> SearchUsers(string username)
+        {
+            
+            Console.WriteLine(username);
+            foreach (var item in await _userService.SearchAsync(username))
+            {
+                Console.WriteLine(item.Username);
+            }
+            return Json(await _userService.SearchAsync(username));
+            
+        }
+
+        // DELETE: Users/Delete/5
+        [HttpDelete]
         public async Task<IActionResult> DeleteUser(int id)
         {
             await _userService.DeleteUserAsync(id);

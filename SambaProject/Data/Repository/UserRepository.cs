@@ -57,6 +57,18 @@ namespace SambaProject.Data.Repository
             return await _context.Users.SingleOrDefaultAsync(u => u.Username == username);
         }
 
+        public async Task<List<User>> SearchUsersAsync(string searchString)
+        {
+            var users = from u in _context.Users select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(u => u.Username!.Contains(searchString));
+            }
+
+            return await users.ToListAsync();
+        }
+
         public async Task UpdateUserAsync(User newData)
         {
             if (newData == null)
