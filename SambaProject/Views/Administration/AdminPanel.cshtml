@@ -73,34 +73,34 @@
                 <tbody id="tblUsers">
                     @foreach (var user in Model.Users)
                     {
-                        <tr>
+                        <tr id="tr-@user.UserId">
                             <td>
                                 <span class="custom-checkbox">
                                     <input type="checkbox" id="checkbox1" name="options[]" value="1">
                                     <label for="checkbox1"></label>
                                 </span>
                             </td>
-                            <td id="user-@user.UserId" onclick='changeTdToInput("#user-@user.UserId", "@user.Username")'>@user.Username</td>
+                            <td id="user-@user.UserId">@user.Username</td>
                             
                             @switch (@user.AccessRoleId)
                             {
                                 case 1:
-                                    <td id="drop-down-user-@user.UserId" onclick='changeTdToSelect("#drop-down-user-@user.UserId")'>Owner</td>
+                                    <td id="drop-down-user-@user.UserId">Owner</td>
                                     break;
                                 case 2:
-                                    <td id="drop-down-user-@user.UserId" onclick='changeTdToSelect("#drop-down-user-@user.UserId")'>Admin</td>
+                                    <td id="drop-down-user-@user.UserId">Admin</td>
                                     break;
                                 case 3:
-                                    <td id="drop-down-user-@user.UserId" onclick='changeTdToSelect("#drop-down-user-@user.UserId")'>Write</td>
+                                    <td id="drop-down-user-@user.UserId">Write</td>
                                     break;
                                 default:
-                                    <td id="drop-down-user-@user.UserId" onclick='changeTdToSelect("#drop-down-user-@user.UserId")'>Read</td>
+                                    <td id="drop-down-user-@user.UserId">Read</td>
                                     break;
                             }
-                            <td>
+                            <td id="buttons-@user.UserId">
 
-                                <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit"><iconify-icon icon="eva:edit-outline" width="27" height="27"></iconify-icon></i></a>
-                                <form asp-action="DeleteUser" asp-route-id="@user.UserId" onsubmit="return jQueryAjaxDelete(this)">
+                                <a id="edit-user-@user.UserId" onclick="changeTdToInputAndSelect('#user-@user.UserId', '@user.Username', '#drop-down-user-@user.UserId', '#buttons-@user.UserId')" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit"><iconify-icon icon="eva:edit-outline" width="27" height="27"></iconify-icon></i></a>
+                                <form asp-action="DeleteUser" asp-route-id="@user.UserId" id="delete-user-@user.UserId" onsubmit="return jQueryAjaxDelete(this)">
                                     <button type="submit" class="delete" data-toggle="modal">
                                         <i class="material-icons" data-toggle="tooltip" title="Delete">
                                             <iconify-icon icon="mingcute:delete-2-line" width="25" height="25"></iconify-icon>
@@ -117,9 +117,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
 
 </body>

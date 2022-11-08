@@ -1,6 +1,4 @@
-﻿
-
-.table-wrapper {
+﻿.table-wrapper {
     position: absolute;
     top: 45%;
     left: 70%;
@@ -196,7 +194,7 @@ table.table td select {
     display: inline-block;
     font: inherit;
     line-height: 1.5em;
-    padding: 0.5em 6.1em 0.5em 1em;
+    padding: 0.5em;
     margin: 0;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -220,6 +218,23 @@ table.table td select.classic:focus {
     border-color: grey;
     outline: 0;
 }
+
+/*----------------------------------------------
+--------------------input----------------------
+--------------------------------------------*/
+
+table.table td input[type=text] {
+    background-color: rgba(0,0,0,.5);
+    color: #fff;
+    border: thin solid white;
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    margin-right: -70px;
+    padding: 0.5em 0.2em 0.5em 0.2em;
+}
+
 
 .hint-text {
     float: left;

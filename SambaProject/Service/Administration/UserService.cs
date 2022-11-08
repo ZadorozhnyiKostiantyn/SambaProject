@@ -53,7 +53,7 @@ namespace SambaProject.Service.Administration
 
         public async Task UpdateUserAsync(User newData)
         {
-            await _userRepository.UpdateUserAsync(newData: newData);
+            await _userRepository.UpdateUserAsync(newData);
         }
     }
 }

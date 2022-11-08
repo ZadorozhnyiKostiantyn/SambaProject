@@ -83,10 +83,17 @@ namespace SambaProject.Data.Repository
                 throw new ArgumentNullException("This user is not exist");
             }
 
-            user.Username = newData.Username;
-            user.AccessRoleId = newData.AccessRoleId;
+            if(user.Username != newData.Username)
+            {
+                user.Username = newData.Username;
+            }
 
-            await _context.SaveChangesAsync();  
+            if (user.AccessRoleId != newData.AccessRoleId)
+            {
+                user.AccessRoleId = newData.AccessRoleId;
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

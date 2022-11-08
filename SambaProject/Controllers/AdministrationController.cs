@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using SambaProject.Data.Enum;
 using SambaProject.Data.Models;
-using SambaProject.Data.Repository;
 using SambaProject.Models;
 using SambaProject.Service.Administration;
 using SambaProject.Service.Authentication;
@@ -41,14 +40,31 @@ namespace SambaProject.Controllers
         [HttpPost]
         public async Task<IActionResult> SearchUsers(string username)
         {
-            
-            Console.WriteLine(username);
-            foreach (var item in await _userService.SearchAsync(username))
+
+            if (String.IsNullOrEmpty(username))
             {
-                Console.WriteLine(item.Username);
+                return Json(await _userService.GetAllUsersAsync());
             }
+
             return Json(await _userService.SearchAsync(username));
             
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> EditUser(IFormCollection value)
+        {
+            Console.WriteLine(Int32.Parse(value["id"]));
+            Console.WriteLine(value["username"]);
+            Console.WriteLine(value["accessRoleId"]);
+            var user = new User
+            {
+                UserId = Int32.Parse(value["id"]),
+                Username = value["username"],
+                AccessRoleId = Int16.Parse(value["accessRoleId"])
+            };
+            await _userService.UpdateUserAsync(user);
+
+            return Json(user);
         }
 
         // DELETE: Users/Delete/5
