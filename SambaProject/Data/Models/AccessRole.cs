@@ -1,4 +1,4 @@
-﻿using SambaProject.Data.Enum;
+﻿using Syncfusion.EJ2.FileManager.Base;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,7 +8,8 @@ namespace SambaProject.Data.Models
     {
         [Key]
         public int AccessRoleId { get; set; }
-        public AccessRolesCategories Role { get; set; }
+        public string Role { get; set; } = null!;
+        public virtual ICollection<AccessRuleRoles> Rules { get; set; }
         public virtual ICollection<User> Users { get; set; }
     }
 }

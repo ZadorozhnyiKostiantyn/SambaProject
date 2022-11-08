@@ -18,21 +18,63 @@ namespace SambaProject.Migrations
                 .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("SambaProject.Models.AccessRole", b =>
+            modelBuilder.Entity("SambaProject.Data.Models.AccessRole", b =>
                 {
                     b.Property<int>("AccessRoleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("AccessRoleId");
 
                     b.ToTable("AccessRoles");
                 });
 
-            modelBuilder.Entity("SambaProject.Models.User", b =>
+            modelBuilder.Entity("SambaProject.Data.Models.AccessRuleRoles", b =>
+                {
+                    b.Property<int>("AccessRuleRolesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("AccessRoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Copy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Download")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsFile")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Read")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Upload")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Write")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WriteContents")
+                        .HasColumnType("int");
+
+                    b.HasKey("AccessRuleRolesId");
+
+                    b.HasIndex("AccessRoleId");
+
+                    b.ToTable("AccessRules");
+                });
+
+            modelBuilder.Entity("SambaProject.Data.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -57,9 +99,20 @@ namespace SambaProject.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SambaProject.Models.User", b =>
+            modelBuilder.Entity("SambaProject.Data.Models.AccessRuleRoles", b =>
                 {
-                    b.HasOne("SambaProject.Models.AccessRole", "AccessRole")
+                    b.HasOne("SambaProject.Data.Models.AccessRole", "AccessRole")
+                        .WithMany("Rules")
+                        .HasForeignKey("AccessRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccessRole");
+                });
+
+            modelBuilder.Entity("SambaProject.Data.Models.User", b =>
+                {
+                    b.HasOne("SambaProject.Data.Models.AccessRole", "AccessRole")
                         .WithMany("Users")
                         .HasForeignKey("AccessRoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -68,8 +121,10 @@ namespace SambaProject.Migrations
                     b.Navigation("AccessRole");
                 });
 
-            modelBuilder.Entity("SambaProject.Models.AccessRole", b =>
+            modelBuilder.Entity("SambaProject.Data.Models.AccessRole", b =>
                 {
+                    b.Navigation("Rules");
+
                     b.Navigation("Users");
                 });
 #pragma warning restore 612, 618

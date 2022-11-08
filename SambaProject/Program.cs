@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SambaProject.Data;
 using SambaProject.Service;
+using Syncfusion.EJ2.Inputs;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -10,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
         .AddData(builder.Configuration.GetConnectionString("MySqlDatabase"))
         .AddService();
 }
-
 
 var app = builder.Build();
 {
@@ -27,13 +27,4 @@ var app = builder.Build();
 
     app.Run();
 }
-
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
 

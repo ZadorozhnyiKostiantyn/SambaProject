@@ -31,7 +31,7 @@ namespace SambaProject.Controllers
                 return RedirectToAction("Login");
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", user.AccessRoleId);
         }
     }
 }
