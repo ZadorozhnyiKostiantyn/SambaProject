@@ -14,6 +14,7 @@ namespace SambaProject.Controllers
             _authenticationService = authenticationService;
         }
 
+        [Route("login")]
         public IActionResult Login()
         {
             return View();

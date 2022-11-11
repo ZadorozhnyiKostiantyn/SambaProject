@@ -4,6 +4,7 @@ namespace SambaProject.Data.Repository
 {
     public interface IAccessRoleRepository
     {
-        public Task<AccessRole> GetAccessRoleById(int id);
+        public AccessRole? GetAccessRoleById(int id);
+        public List<AccessRole> GetAllAccessRole();
     }
 }

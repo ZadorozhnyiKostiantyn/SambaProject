@@ -59,7 +59,7 @@ namespace SambaProject.Service.Authentication
             }
 
             // 3. Create JWT Token
-            var token = _jwtTokenGenerator.GenerateToken(user, await _accessRoleRepository.GetAccessRoleById(user.AccessRoleId));
+            var token = _jwtTokenGenerator.GenerateToken(user, _accessRoleRepository.GetAccessRoleById(user.AccessRoleId));
 
             return new AuthenticationResult(user, token);
 

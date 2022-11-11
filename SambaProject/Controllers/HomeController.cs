@@ -6,10 +6,10 @@ using Newtonsoft.Json;
 using Syncfusion.EJ2.FileManager.Base;
 using SambaProject.Service.Connection;
 using Microsoft.AspNetCore.Http.Features;
-using SambaProject.Data.Repository;
-using SambaProject.Service.Authentication;
 using System.Net;
 using SambaProject.Helpers.Attribute;
+using SambaProject.Service.Administration;
+
 
 namespace SambaProject.Controllers
 {
@@ -18,18 +18,23 @@ namespace SambaProject.Controllers
     {
         private readonly PhysicalFileProvider operation;
         private readonly NetworkSettings _networkSettings;
+        private readonly IAccessRoleService _accessRoleService;
+
 
         public HomeController(
-            NetworkSettings networkSettings)
+            NetworkSettings networkSettings,
+            IAccessRoleService accessRoleService)
         {
             _networkSettings = networkSettings;
-            this.operation = new PhysicalFileProvider();
-            this.operation.RootFolder(_networkSettings.NetworkPath);
+            _accessRoleService = accessRoleService;
+            operation = new PhysicalFileProvider();
+            operation.RootFolder(_networkSettings.NetworkPath);
+            operation.SetRules(_accessRoleService.GetAccessDetails());
         }
 
         public object FileOperations([FromBody] FileManagerDirectoryContent args)
         {
-            using(new ConnectToSharedFolder(
+            using (new ConnectToSharedFolder(
                 _networkSettings.NetworkPath,
                 new NetworkCredential(_networkSettings.Username, _networkSettings.Password)))
             {
@@ -119,7 +124,10 @@ namespace SambaProject.Controllers
             }
         }
         
-
+        public AccessDetails GetDetails(int id)
+        {
+            return new AccessDetails(); 
+        }
         // downloads the selected file(s) and folder(s)
         public IActionResult Download(string downloadInput)
         {
@@ -143,9 +151,6 @@ namespace SambaProject.Controllers
             }
         }
 
-
-        [HttpGet]
-        [Route("ShareFolder")]
         public IActionResult Index()
         {
             return View();

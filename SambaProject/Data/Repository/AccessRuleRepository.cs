@@ -12,9 +12,9 @@ namespace SambaProject.Data.Repository
             _context = context;
         }
 
-        public async Task<List<AccessRuleRoles>> GetAllRuleAsync()
+        public List<AccessRuleRoles> GetAllRule()
         {
-            return await _context.AccessRules.ToListAsync();
+            return _context.AccessRules.ToList();
         }
     }
 }

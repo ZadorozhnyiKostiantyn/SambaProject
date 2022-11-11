@@ -12,9 +12,14 @@ namespace SambaProject.Data.Repository
             _context = context;
         }
 
-        public async Task<AccessRole> GetAccessRoleById(int id)
+        public AccessRole? GetAccessRoleById(int id)
         {
-            return await _context.AccessRoles.SingleOrDefaultAsync(r => r.AccessRoleId == id);
+            return _context.AccessRoles.SingleOrDefault(r => r.AccessRoleId == id);
+        }
+
+        public List<AccessRole> GetAllAccessRole()
+        {
+            return _context.AccessRoles.ToList();
         }
     }
 }

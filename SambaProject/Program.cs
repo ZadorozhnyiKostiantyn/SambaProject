@@ -1,7 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using SambaProject.Data;
 using SambaProject.Service;
-using Syncfusion.EJ2.Inputs;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -36,7 +34,7 @@ var app = builder.Build();
 
     app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Authentication}/{action=Login}/{id?}");
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
     app.Run();
 }
