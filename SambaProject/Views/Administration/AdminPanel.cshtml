@@ -6,8 +6,8 @@
     {
         new SelectListItem {Text = "Owner", Value="1"},
         new SelectListItem {Text = "Admin", Value="2"},
-        new SelectListItem {Text = "Write", Value="3"},
-        new SelectListItem {Text = "Read", Value="4"},
+        new SelectListItem {Text = "Editor", Value="3"},
+        new SelectListItem {Text = "Viewer", Value="4"},
     }, "Value", "Text");
 };
 <!DOCTYPE html>
@@ -91,10 +91,10 @@
                                     <td id="drop-down-user-@user.UserId">Admin</td>
                                     break;
                                 case 3:
-                                    <td id="drop-down-user-@user.UserId">Write</td>
+                                    <td id="drop-down-user-@user.UserId">Editor</td>
                                     break;
                                 default:
-                                    <td id="drop-down-user-@user.UserId">Read</td>
+                                    <td id="drop-down-user-@user.UserId">Viewer</td>
                                     break;
                             }
                             <td id="buttons-@user.UserId">

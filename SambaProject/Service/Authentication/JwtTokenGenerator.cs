@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Options;
+﻿
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using SambaProject.Data.Models;
 using SambaProject.Models;
@@ -19,7 +20,7 @@ namespace SambaProject.Service.Authentication
             _jwtSettings = jwtOptions.Value;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateToken(User user, AccessRole role)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(
@@ -30,6 +31,7 @@ namespace SambaProject.Service.Authentication
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserId .ToString()),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.Username),
+                new Claim("access_role", role.Role),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 

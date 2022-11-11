@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SambaProject.Data.Models;
 using SambaProject.Models;
 using SambaProject.Service.Administration;
@@ -6,6 +7,7 @@ using SambaProject.Service.Authentication;
 
 namespace SambaProject.Controllers
 {
+    [Authorize(Roles = "owner, admin")]
     public class AdministrationController : Controller
     {
         private readonly IAuthenticationService _authenticationService;

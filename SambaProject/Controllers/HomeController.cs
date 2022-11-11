@@ -6,26 +6,42 @@ using Newtonsoft.Json;
 using Syncfusion.EJ2.FileManager.Base;
 using SambaProject.Service.Connection;
 using Microsoft.AspNetCore.Http.Features;
+using SambaProject.Data.Repository;
+using Microsoft.AspNetCore.Authorization;
+using SambaProject.Service.Authentication;
+using System.Net;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace SambaProject.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly PhysicalFileProvider operation;
-        private readonly NetworkConnectionModel connection;
+        private readonly NetworkSettings _networkSettings;
+        private readonly IJwtValidatorService _jwtValidator;
 
-        public HomeController()
+        public HomeController(
+            IAccessRoleRepository accessRoleRepository,
+            IAccessRuleRepository accessRuleRepository,
+            IConfiguration configuration,
+            IJwtValidatorService jwtValidator,
+            NetworkSettings networkSettings)
         {
+
+            _jwtValidator = jwtValidator;
+            _networkSettings = networkSettings;
             this.operation = new PhysicalFileProvider();
-            this.connection = new NetworkConnectionModel();
-            this.operation.RootFolder(connection.NetworkPath);
+            this.operation.RootFolder(_networkSettings.NetworkPath);
         }
 
         public object FileOperations([FromBody] FileManagerDirectoryContent args)
         {
-            using(new ConnectToSharedFolder(connection.NetworkPath, connection.Credentials))
+            using(new ConnectToSharedFolder(
+                _networkSettings.NetworkPath,
+                new NetworkCredential(_networkSettings.Username, _networkSettings.Password)))
             {
-                var fullPath = (connection.NetworkPath + args.Path).Replace("/", "\\");
+                var fullPath = (_networkSettings.NetworkPath + args.Path).Replace("/", "\\");
                 if (args.Action == "delete" || args.Action == "rename")
                 {
                     if ((args.TargetPath == null) && (args.Path == ""))
@@ -94,7 +110,9 @@ namespace SambaProject.Controllers
         // uploads the file(s) into a specified path
         public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
         {
-            using (new ConnectToSharedFolder(connection.NetworkPath, connection.Credentials))
+            using (new ConnectToSharedFolder(
+                _networkSettings.NetworkPath,
+                new NetworkCredential(_networkSettings.Username, _networkSettings.Password)))
             {
                 FileManagerResponse uploadResponse;
                 uploadResponse = operation.Upload(path, uploadFiles, action, null);
@@ -113,7 +131,9 @@ namespace SambaProject.Controllers
         // downloads the selected file(s) and folder(s)
         public IActionResult Download(string downloadInput)
         {
-            using (new ConnectToSharedFolder(connection.NetworkPath, connection.Credentials))
+            using (new ConnectToSharedFolder(
+                _networkSettings.NetworkPath,
+                new NetworkCredential(_networkSettings.Username, _networkSettings.Password)))
             {
                 FileManagerDirectoryContent args = JsonConvert.DeserializeObject<FileManagerDirectoryContent>(downloadInput);
                 return operation.Download(args.Path, args.Names, args.Data);
@@ -123,15 +143,31 @@ namespace SambaProject.Controllers
         // gets the image(s) from the given path
         public IActionResult GetImage(FileManagerDirectoryContent args)
         {
-            using(new ConnectToSharedFolder(connection.NetworkPath, connection.Credentials))
+            using (new ConnectToSharedFolder(
+                _networkSettings.NetworkPath,
+                new NetworkCredential(_networkSettings.Username, _networkSettings.Password)))
             {
                 return this.operation.GetImage(args.Path, args.Id, false, null, null);
             }
         }
 
+
+        [HttpGet]
         [Route("ShareFolder")]
         public IActionResult Index()
         {
+            string token = HttpContext.Session.GetString("Token");
+
+            if (token == null)
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
+
+            if (!_jwtValidator.ValidateToken(token))
+            {
+                return RedirectToAction("Login", "Authentication");
+            }
+
             return View();
         }
 

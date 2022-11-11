@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SambaProject.Data.Models;
 using SambaProject.Data.Repository;
+using SambaProject.Models;
 
 namespace SambaProject.Service.Authentication
 {
@@ -9,12 +10,18 @@ namespace SambaProject.Service.Authentication
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IAccessRoleRepository _accessRoleRepository;
 
-        public AuthenticationService(IJwtTokenGenerator jwtTokenGenerator, IUserRepository userReporitory, IPasswordHasher<User> passwordHasher)
+        public AuthenticationService(
+            IJwtTokenGenerator jwtTokenGenerator,
+            IUserRepository userReporitory,
+            IPasswordHasher<User> passwordHasher,
+            IAccessRoleRepository accessRoleRepository)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userReporitory;
             _passwordHasher = passwordHasher;
+            _accessRoleRepository = accessRoleRepository;
         }
 
         public async Task Register(string username, string password, int roleId)
@@ -35,11 +42,9 @@ namespace SambaProject.Service.Authentication
             user.Password = _passwordHasher.HashPassword(user, password);
 
             await _userRepository.AddUserAsync(user);
-
-            // 3. Create JWT token
         }
 
-        public async Task<User> Login(string userName, string password)
+        public async Task<AuthenticationResult> Login(string userName, string password)
         {
             // 1. Validate the user exists
             if (await _userRepository.GetUserByUserNameAsync(userName) is not User user)
@@ -54,8 +59,9 @@ namespace SambaProject.Service.Authentication
             }
 
             // 3. Create JWT Token
+            var token = _jwtTokenGenerator.GenerateToken(user, await _accessRoleRepository.GetAccessRoleById(user.AccessRoleId));
 
-            return user;
+            return new AuthenticationResult(user, token);
 
         }
     }
