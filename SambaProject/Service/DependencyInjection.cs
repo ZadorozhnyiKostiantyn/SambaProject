@@ -38,8 +38,8 @@ namespace SambaProject.Service
             var jwtSettings = new JwtSettings();
             configuration.Bind(JwtSettings.SectionName, jwtSettings);
             services.AddSingleton(Options.Create(jwtSettings));
-            services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-            services.AddSingleton<IJwtValidatorService, JwtValidatorService>();
+
+            services.AddSingleton<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
 
             services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

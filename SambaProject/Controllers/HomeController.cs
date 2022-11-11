@@ -7,29 +7,21 @@ using Syncfusion.EJ2.FileManager.Base;
 using SambaProject.Service.Connection;
 using Microsoft.AspNetCore.Http.Features;
 using SambaProject.Data.Repository;
-using Microsoft.AspNetCore.Authorization;
 using SambaProject.Service.Authentication;
 using System.Net;
-using Microsoft.AspNetCore.Mvc.Routing;
+using SambaProject.Helpers.Attribute;
 
 namespace SambaProject.Controllers
 {
-    [Authorize]
+    [AuthorizeUser]
     public class HomeController : Controller
     {
         private readonly PhysicalFileProvider operation;
         private readonly NetworkSettings _networkSettings;
-        private readonly IJwtValidatorService _jwtValidator;
 
         public HomeController(
-            IAccessRoleRepository accessRoleRepository,
-            IAccessRuleRepository accessRuleRepository,
-            IConfiguration configuration,
-            IJwtValidatorService jwtValidator,
             NetworkSettings networkSettings)
         {
-
-            _jwtValidator = jwtValidator;
             _networkSettings = networkSettings;
             this.operation = new PhysicalFileProvider();
             this.operation.RootFolder(_networkSettings.NetworkPath);
@@ -156,18 +148,6 @@ namespace SambaProject.Controllers
         [Route("ShareFolder")]
         public IActionResult Index()
         {
-            string token = HttpContext.Session.GetString("Token");
-
-            if (token == null)
-            {
-                return RedirectToAction("Login", "Authentication");
-            }
-
-            if (!_jwtValidator.ValidateToken(token))
-            {
-                return RedirectToAction("Login", "Authentication");
-            }
-
             return View();
         }
 

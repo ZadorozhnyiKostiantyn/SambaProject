@@ -7,13 +7,13 @@ namespace SambaProject.Service.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IJwtTokenGeneratorService _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IAccessRoleRepository _accessRoleRepository;
 
         public AuthenticationService(
-            IJwtTokenGenerator jwtTokenGenerator,
+            IJwtTokenGeneratorService jwtTokenGenerator,
             IUserRepository userReporitory,
             IPasswordHasher<User> passwordHasher,
             IAccessRoleRepository accessRoleRepository)
