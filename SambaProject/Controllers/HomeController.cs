@@ -105,6 +105,25 @@ namespace SambaProject.Controllers
         }
 
         // uploads the file(s) into a specified path
+        //public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
+        //{
+        //    using (new ConnectToSharedFolder(
+        //        _networkSettings.NetworkPath,
+        //        new NetworkCredential(_networkSettings.Username, _networkSettings.Password)))
+        //    {
+        //        FileManagerResponse uploadResponse;
+        //        uploadResponse = operation.Upload(path, uploadFiles, action, null);
+        //        if (uploadResponse.Error != null)
+        //        {
+        //            Response.Clear();
+        //            Response.ContentType = "application/json; charset=utf-8";
+        //            Response.StatusCode = Convert.ToInt32(uploadResponse.Error.Code);
+        //            Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = uploadResponse.Error.Message;
+        //        }
+        //        return Content("");
+        //    }
+        //}
+
         public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
         {
             using (new ConnectToSharedFolder(
@@ -114,20 +133,36 @@ namespace SambaProject.Controllers
                 FileManagerResponse uploadResponse;
                 uploadResponse = operation.Upload(path, uploadFiles, action, null);
                 if (uploadResponse.Error != null)
-                {
-                    Response.Clear();
-                    Response.ContentType = "application/json; charset=utf-8";
-                    Response.StatusCode = Convert.ToInt32(uploadResponse.Error.Code);
-                    Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = uploadResponse.Error.Message;
-                }
+                    foreach (var file in uploadFiles)
+                    {
+                        Response.Clear();
+                        Response.ContentType = "application/json; charset=utf-8";
+                        Response.StatusCode = Convert.ToInt32(uploadResponse.Error.Code);
+                        Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = uploadResponse.Error.Message;
+                        var folders = (file.FileName).Split('/');
+                        Console.WriteLine(folders);
+                        // checking the folder upload
+                        if (folders.Length > 1)
+                        {
+                            for (var i = 0; i < folders.Length - 1; i++)
+                            {
+                                Console.WriteLine(folders[i]);
+                                string newDirectoryPath = Path.Combine(path, folders[i]);
+                                if (!Directory.Exists(newDirectoryPath))
+                                {
+                                    this.operation.ToCamelCase(this.operation.Create(path, folders[i]));
+                                }
+                                path += folders[i] + "/";
+                            }
+                        }
+                    }
+                // Invoking upload operation with the required paramaters
+                // path - Current path where the file is to uploaded; uploadFiles - Files to be uploaded; action - name of the operation(upload)
+                uploadResponse = operation.Upload(path, uploadFiles, action, null);
                 return Content("");
             }
         }
-        
-        public AccessDetails GetDetails(int id)
-        {
-            return new AccessDetails(); 
-        }
+
         // downloads the selected file(s) and folder(s)
         public IActionResult Download(string downloadInput)
         {
