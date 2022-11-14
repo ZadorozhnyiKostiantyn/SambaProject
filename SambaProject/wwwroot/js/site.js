@@ -12,8 +12,8 @@
     var $select = $(`<select id="select-role-${id}">` +
         '<option value="1" name="Owner">Owner</option>' +
         '<option value="2" name="Admin">Admin</option>' +
-        '<option value="3" name="Write">Write</option>' +
-        '<option value="4" name="Read">Read</option>' +
+        '<option value="3" name="Editor">Editor</option>' +
+        '<option value="4" name="Viewer">Viewer</option>' +
         '</select>'
     );
 

@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using SambaProject.Helpers.Attribute;
 using SambaProject.Models;
+using SambaProject.Service.Administration;
+using SambaProject.Service.Connection;
+using Syncfusion.EJ2.FileManager.Base;
 using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
 using System.Diagnostics;
-using Newtonsoft.Json;
-using Syncfusion.EJ2.FileManager.Base;
-using SambaProject.Service.Connection;
-using Microsoft.AspNetCore.Http.Features;
 using System.Net;
-using SambaProject.Helpers.Attribute;
-using SambaProject.Service.Administration;
-
 
 namespace SambaProject.Controllers
 {
@@ -19,7 +17,6 @@ namespace SambaProject.Controllers
         private readonly PhysicalFileProvider operation;
         private readonly NetworkSettings _networkSettings;
         private readonly IAccessRoleService _accessRoleService;
-
 
         public HomeController(
             NetworkSettings networkSettings,
@@ -50,21 +47,21 @@ namespace SambaProject.Controllers
                             Message = "Restricted to modify the root folder."
                         };
 
-                        return this.operation.ToCamelCase(response);
+                        return operation.ToCamelCase(response);
                     }
                 }
                 switch (args.Action)
                 {
                     case "read":
                         // reads the file(s) or folder(s) from the given path.
-                        return this.operation.ToCamelCase(this.operation.GetFiles(args.Path, args.ShowHiddenItems));
+                        return operation.ToCamelCase(operation.GetFiles(args.Path, args.ShowHiddenItems));
                     case "delete":
                         // deletes the selected file(s) or folder(s) from the given path.
-                        return this.operation.ToCamelCase(this.operation.Delete(args.Path, args.Names));
+                        return operation.ToCamelCase(operation.Delete(args.Path, args.Names));
                     case "copy":
                         // copies the selected file(s) or folder(s) from a path and then pastes them into a given target path.
-                        return this.operation.ToCamelCase(
-                            this.operation.Copy(
+                        return operation.ToCamelCase(
+                            operation.Copy(
                                 args.Path,
                                 args.TargetPath,
                                 args.Names,
@@ -73,8 +70,8 @@ namespace SambaProject.Controllers
                         ));
                     case "move":
                         // cuts the selected file(s) or folder(s) from a path and then pastes them into a given target path.
-                        return this.operation.ToCamelCase(
-                            this.operation.Move(
+                        return operation.ToCamelCase(
+                            operation.Move(
                                 args.Path,
                                 args.TargetPath,
                                 args.Names,
@@ -83,14 +80,14 @@ namespace SambaProject.Controllers
                         ));
                     case "details":
                         // gets the details of the selected file(s) or folder(s).
-                        return this.operation.ToCamelCase(this.operation.Details(args.Path, args.Names, args.Data));
+                        return operation.ToCamelCase(operation.Details(args.Path, args.Names, args.Data));
                     case "create":
                         // creates a new folder in a given path.
-                        return this.operation.ToCamelCase(this.operation.Create(args.Path, args.Name));
+                        return operation.ToCamelCase(operation.Create(args.Path, args.Name));
                     case "search":
                         // gets the list of file(s) or folder(s) from a given path based on the searched key string.
-                        return this.operation.ToCamelCase(
-                            this.operation.Search(
+                        return operation.ToCamelCase(
+                            operation.Search(
                                 args.Path,
                                 args.SearchString,
                                 args.ShowHiddenItems,
@@ -98,66 +95,45 @@ namespace SambaProject.Controllers
                         ));
                     case "rename":
                         // renames a file or folder.
-                        return this.operation.ToCamelCase(this.operation.Rename(args.Path, args.Name, args.NewName));
+                        return operation.ToCamelCase(operation.Rename(args.Path, args.Name, args.NewName));
                 }
                 return null;
             }
         }
 
-        // uploads the file(s) into a specified path
-        //public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
-        //{
-        //    using (new ConnectToSharedFolder(
-        //        _networkSettings.NetworkPath,
-        //        new NetworkCredential(_networkSettings.Username, _networkSettings.Password)))
-        //    {
-        //        FileManagerResponse uploadResponse;
-        //        uploadResponse = operation.Upload(path, uploadFiles, action, null);
-        //        if (uploadResponse.Error != null)
-        //        {
-        //            Response.Clear();
-        //            Response.ContentType = "application/json; charset=utf-8";
-        //            Response.StatusCode = Convert.ToInt32(uploadResponse.Error.Code);
-        //            Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = uploadResponse.Error.Message;
-        //        }
-        //        return Content("");
-        //    }
-        //}
-
+        // upload the selected file(s) or folder
+        [DisableRequestSizeLimit]
+        [RequestFormLimits(MultipartBodyLengthLimit = 10_737_418_240, ValueLengthLimit = Int32.MaxValue)]
         public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
         {
             using (new ConnectToSharedFolder(
                 _networkSettings.NetworkPath,
                 new NetworkCredential(_networkSettings.Username, _networkSettings.Password)))
             {
+                string newPath = path;
                 FileManagerResponse uploadResponse;
-                uploadResponse = operation.Upload(path, uploadFiles, action, null);
-                if (uploadResponse.Error != null)
-                    foreach (var file in uploadFiles)
+
+                foreach (var file in uploadFiles)
+                {
+                    var folders = (file.FileName).Split('/');
+
+                    // checking the folder upload
+                    if (folders.Length > 1)
                     {
-                        Response.Clear();
-                        Response.ContentType = "application/json; charset=utf-8";
-                        Response.StatusCode = Convert.ToInt32(uploadResponse.Error.Code);
-                        Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = uploadResponse.Error.Message;
-                        var folders = (file.FileName).Split('/');
-                        Console.WriteLine(folders);
-                        // checking the folder upload
-                        if (folders.Length > 1)
+                        for (var i = 0; i < folders.Length - 1; i++)
                         {
-                            for (var i = 0; i < folders.Length - 1; i++)
+                            string newDirectoryPath = Path.Combine(newPath, folders[i]);
+                            if (!Directory.Exists(newDirectoryPath))
                             {
-                                Console.WriteLine(folders[i]);
-                                string newDirectoryPath = Path.Combine(path, folders[i]);
-                                if (!Directory.Exists(newDirectoryPath))
-                                {
-                                    this.operation.ToCamelCase(this.operation.Create(path, folders[i]));
-                                }
-                                path += folders[i] + "/";
+                                operation.ToCamelCase(operation.Create(newPath, folders[i]));
                             }
+                            newPath += folders[i] + "/";
                         }
                     }
-                // Invoking upload operation with the required paramaters
-                // path - Current path where the file is to uploaded; uploadFiles - Files to be uploaded; action - name of the operation(upload)
+
+                }
+
+
                 uploadResponse = operation.Upload(path, uploadFiles, action, null);
                 return Content("");
             }
@@ -182,7 +158,7 @@ namespace SambaProject.Controllers
                 _networkSettings.NetworkPath,
                 new NetworkCredential(_networkSettings.Username, _networkSettings.Password)))
             {
-                return this.operation.GetImage(args.Path, args.Id, false, null, null);
+                return operation.GetImage(args.Path, args.Id, false, null, null);
             }
         }
 

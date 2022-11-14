@@ -29,10 +29,6 @@ namespace SambaProject.Controllers
                 user.Username,
                 user.Password);
 
-            Console.WriteLine(authResult);
-
-            
-
             if (authResult == null)
             {
                 return RedirectToAction("Login");

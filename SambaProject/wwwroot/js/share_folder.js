@@ -1,29 +1,4 @@
-﻿$(document).ready(function () {
-    // Activate tooltip
-    $('[data-toggle="tooltip"]').tooltip();
-
-    // Write your JavaScript code.
-    // Select/Deselect checkboxes
-    var checkbox = $('table tbody input[type="checkbox"]');
-    $("#selectAll").click(function () {
-        if (this.checked) {
-            checkbox.each(function () {
-                this.checked = true;
-            });
-        } else {
-            checkbox.each(function () {
-                this.checked = false;
-            });
-        }
-    });
-    checkbox.click(function () {
-        if (!this.checked) {
-            $("#selectAll").prop("checked", false);
-        }
-    });
-});
-
-function onCreated(args) {
+﻿function onCreated(args) {
     var fileObject = document.getElementById("filemanager").ej2_instances[0];
     document.getElementById('filemanager_tb_upload').onclick = function (args) {
         args.stopPropagation();
