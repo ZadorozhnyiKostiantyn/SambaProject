@@ -1,6 +1,6 @@
 ﻿using Syncfusion.EJ2.FileManager.Base;
 
-namespace SambaProject.Service.Administration
+namespace SambaProject.Service.UserManager
 {
     public interface IAccessRuleService
     {

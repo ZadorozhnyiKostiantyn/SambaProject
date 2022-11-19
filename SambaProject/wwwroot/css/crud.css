@@ -125,15 +125,15 @@ table.table th i {
 }
 
 table.table tr td:nth-child(2) {
-    width: 280px;
+    width: 220px;
 }
 
 table.table tr td:nth-child(3) {
-    width: 230px;
+    width: 163px;
 }
 
 table.table tr td:nth-child(4) {
-    width: 90px;
+    width: 82px;
 }
 
 table.table td:last-child i {
@@ -231,7 +231,7 @@ table.table td input[type=text] {
     display: inline-block;
     font: inherit;
     line-height: 1.5em;
-    margin-right: -70px;
+    margin-right: -120px;
     padding: 0.5em 0.2em 0.5em 0.2em;
 }
 

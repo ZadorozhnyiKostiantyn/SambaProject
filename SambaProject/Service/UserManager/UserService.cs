@@ -1,19 +1,25 @@
 ﻿using SambaProject.Data;
 using SambaProject.Data.Models;
 using SambaProject.Data.Repository;
+using SambaProject.Models;
 using SambaProject.Service.Authentication;
 
-namespace SambaProject.Service.Administration
+namespace SambaProject.Service.UserManager
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
         private readonly IAuthenticationService _authenticationService;
+        private readonly IAccessRoleService _accessRoleService;
 
-        public UserService(IUserRepository userRepository, IAuthenticationService authenticationService)
+        public UserService(
+            IUserRepository userRepository,
+            IAuthenticationService authenticationService,
+            IAccessRoleService accessRoleService)
         {
             _userRepository = userRepository;
             _authenticationService = authenticationService;
+            _accessRoleService = accessRoleService;
         }
 
         public async Task CreateUserAsync(string userName, string password, int roleId)
@@ -39,15 +45,30 @@ namespace SambaProject.Service.Administration
             return await _userRepository.GetUserByIdAsync(userId);
         }
 
-        public async Task<List<User>> SearchAsync(string query)
+        public async Task<User> GetUserByUsernameAsync(string username)
         {
-          
-            if(String.IsNullOrEmpty(query))
+            return await _userRepository.GetUserByUsernameAsync(username);
+        }
+
+        public async Task<List<UserModel>> SearchAsync(string query)
+        {
+            var users = await _userRepository.SearchUsersAsync(query);
+
+            List<UserModel> result = new List<UserModel>();
+
+            foreach (var user in users)
             {
-                throw new ArgumentNullException(nameof(query));
+                result.Add(
+                    new UserModel
+                    {
+                        Id = user.UserId,
+                        Username = user.Username,
+                        AccessRole = _accessRoleService.GetRoleById(user.AccessRoleId).Role
+                    }
+                );
             }
 
-            return await _userRepository.SearchUsersAsync(query);
+            return result;
 
         }
 

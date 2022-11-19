@@ -4,6 +4,6 @@ namespace SambaProject.Service.Authentication
 {
     public interface IJwtDecodingService
     {
-        public DecodingUserModel DecodeToken(string token);
+        public UserModel DecodeToken(string token);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using SambaProject.Data.Repository;
 using Syncfusion.EJ2.FileManager.Base;
 
-namespace SambaProject.Service.Administration
+namespace SambaProject.Service.UserManager
 {
     public class AccessRuleService : IAccessRuleService
     {

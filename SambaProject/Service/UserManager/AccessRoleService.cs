@@ -3,7 +3,7 @@ using SambaProject.Data.Repository;
 using SambaProject.Service.Authentication;
 using Syncfusion.EJ2.FileManager.Base;
 
-namespace SambaProject.Service.Administration
+namespace SambaProject.Service.UserManager
 {
     public class AccessRoleService : IAccessRoleService
     {

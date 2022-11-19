@@ -35,7 +35,7 @@ namespace SambaProject.Controllers
             }
 
             HttpContext.Session.SetString("Token", authResult.Token);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "FileManager");
         }
     }
 }

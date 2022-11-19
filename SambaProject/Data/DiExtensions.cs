@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using SambaProject.Data.Models;
 using SambaProject.Data.Repository;
 using SambaProject.Models;
-using SambaProject.Service.Administration;
+using SambaProject.Service.UserManager;
 using SambaProject.Service.Authentication;
 using System.Text;
 

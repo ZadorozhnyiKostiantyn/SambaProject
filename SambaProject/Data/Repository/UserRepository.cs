@@ -47,7 +47,7 @@ namespace SambaProject.Data.Repository
             return await _context.Users.SingleOrDefaultAsync(u => u.UserId == userId);
         }
 
-        public async Task<User?> GetUserByUserNameAsync(string username)
+        public async Task<User?> GetUserByUsernameAsync(string username)
         {
             if (username is null)
             {
@@ -64,6 +64,10 @@ namespace SambaProject.Data.Repository
             if (!String.IsNullOrEmpty(searchString))
             {
                 users = users.Where(u => u.Username!.Contains(searchString));
+            }
+            else
+            {
+                await GetAllUserAsync();
             }
 
             return await users.ToListAsync();

@@ -1,6 +1,6 @@
 ﻿namespace SambaProject.Models
 {
-    public class DecodingUserModel
+    public class UserModel
     {
         public int Id { get; set; }
         public string Username { get; set; } = null!;

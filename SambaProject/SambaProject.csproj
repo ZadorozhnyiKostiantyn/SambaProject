@@ -38,7 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Administration\_ViewAll.cshtml" />
+    <Content Remove="Views\UserManager\_ViewAll.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

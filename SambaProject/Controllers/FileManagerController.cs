@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using SambaProject.Helpers.Attribute;
 using SambaProject.Models;
-using SambaProject.Service.Administration;
+using SambaProject.Service.UserManager;
 using SambaProject.Service.Connection;
 using Syncfusion.EJ2.FileManager.Base;
 using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
@@ -12,13 +12,13 @@ using System.Net;
 namespace SambaProject.Controllers
 {
     [AuthorizeUser]
-    public class HomeController : Controller
+    public class FileManagerController : Controller
     {
         private readonly PhysicalFileProvider operation;
         private readonly NetworkSettings _networkSettings;
         private readonly IAccessRoleService _accessRoleService;
 
-        public HomeController(
+        public FileManagerController(
             NetworkSettings networkSettings,
             IAccessRoleService accessRoleService)
         {

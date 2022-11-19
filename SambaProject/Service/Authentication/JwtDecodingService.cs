@@ -14,13 +14,13 @@ namespace SambaProject.Service.Authentication
 {
     public class JwtDecodingService : IJwtDecodingService
     {
-        public DecodingUserModel DecodeToken(string token)
+        public UserModel DecodeToken(string token)
         {
             var handler = new JwtSecurityTokenHandler();
             var jsonToken = handler.ReadToken(token);
             var tokenS = jsonToken as JwtSecurityToken;
 
-            return new DecodingUserModel
+            return new UserModel
             {
                 Id = Int32.Parse(tokenS.Claims.First(claim => claim.Type == "sub").Value),
                 Username = tokenS.Claims.First(claim => claim.Type == "given_name").Value,
