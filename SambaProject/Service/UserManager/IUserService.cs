@@ -12,5 +12,6 @@ namespace SambaProject.Service.UserManager
         public Task<List<UserModel>> SearchAsync(string query);
         public Task<User> GetUserByIdAsync(int userId);
         public Task<User> GetUserByUsernameAsync(string username);
+        public UserModel GetUserByToken();
     }
 }

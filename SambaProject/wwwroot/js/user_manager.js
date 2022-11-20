@@ -1,4 +1,6 @@
-﻿function changeTdToInputAndSelect(id, valueInput) {
+﻿
+
+function changeTdToInputAndSelect(id, valueInput) {
     $.ajax({
         type: 'GET',
         url: 'UserManager/GetAccessRoles',

@@ -11,15 +11,21 @@ namespace SambaProject.Service.UserManager
         private readonly IUserRepository _userRepository;
         private readonly IAuthenticationService _authenticationService;
         private readonly IAccessRoleService _accessRoleService;
+        private readonly IJwtDecodingService _jwtDecodingService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UserService(
             IUserRepository userRepository,
             IAuthenticationService authenticationService,
-            IAccessRoleService accessRoleService)
+            IAccessRoleService accessRoleService,
+            IJwtDecodingService jwtDecodingService,
+            IHttpContextAccessor httpContextAccessor)
         {
             _userRepository = userRepository;
             _authenticationService = authenticationService;
             _accessRoleService = accessRoleService;
+            _jwtDecodingService = jwtDecodingService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task CreateUserAsync(string userName, string password, int roleId)
@@ -43,6 +49,11 @@ namespace SambaProject.Service.UserManager
         public async Task<User> GetUserByIdAsync(int userId)
         {
             return await _userRepository.GetUserByIdAsync(userId);
+        }
+
+        public UserModel GetUserByToken()
+        {
+            return _jwtDecodingService.DecodeToken(_httpContextAccessor.HttpContext.Session.GetString("Token"));
         }
 
         public async Task<User> GetUserByUsernameAsync(string username)

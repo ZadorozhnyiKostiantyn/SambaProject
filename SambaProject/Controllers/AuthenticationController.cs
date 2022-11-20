@@ -37,5 +37,12 @@ namespace SambaProject.Controllers
             HttpContext.Session.SetString("Token", authResult.Token);
             return RedirectToAction("Index", "FileManager");
         }
+
+        public IActionResult DeleteSession()
+        {
+            HttpContext.Session.Remove("Token");
+
+            return RedirectToAction("Login");
+        }
     }
 }

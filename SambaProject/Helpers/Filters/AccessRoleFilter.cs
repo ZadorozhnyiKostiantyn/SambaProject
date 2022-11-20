@@ -32,7 +32,7 @@ namespace SambaProject.Helpers.Filters
                 context.Result = new RedirectToRouteResult(
                     new RouteValueDictionary
                     {
-                        { "controller", "Home"}, { "action", "Index"}
+                        { "controller", "FileManager"}, { "action", "Index"}
                     });
             }
         }

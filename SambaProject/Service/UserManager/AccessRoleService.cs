@@ -32,6 +32,8 @@ namespace SambaProject.Service.UserManager
             };
         }
 
+        
+
         public List<AccessRole> GetAllRoles()
         {
             return _accessRoleRepository.GetAllAccessRole();

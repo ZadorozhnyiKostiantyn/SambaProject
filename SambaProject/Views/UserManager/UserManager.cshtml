@@ -11,7 +11,7 @@
     }
 
     SelectList selectList = new SelectList(accessRoleList, "Value", "Text");
-};
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,9 +19,33 @@
     <link rel="stylesheet" type="text/css" href="~/css/main.css" />
     <link rel="stylesheet" type="text/css" href="~/css/register.css" />
     <link rel="stylesheet" type="text/css" href="~/css/crud.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/navBar.css" />
 </head>
-
 <body>
+    <nav class="sidebar-navigation-1">
+        <iconify-icon class="main-myButton" icon="mingcute:menu-fill" style="color: white;" width="35" height="35"></iconify-icon>
+        <ul class="content">
+            <li>
+                <a asp-controller="FileManager" asp-action="Index">
+                    <iconify-icon icon="ic:round-home" style="color: white;" width="35" height="35"></iconify-icon>
+                </a>
+                <span class="tooltip">Home</span>
+            </li>
+            <li class="active">
+                <a asp-controller="UserManager" asp-action="UserManager">
+                    <iconify-icon icon="mdi:user" style="color: white;" width="35" height="35"></iconify-icon>
+                </a>
+                <span class="tooltip">User Manager</span>
+            </li>
+            <li>
+                <i class="fa fa-newspaper-o">
+                    <a asp-controller="Authentication" asp-action="DeleteSession" style="height: 52px;"><iconify-icon icon="humbleicons:logout" style="color: white;" width="28" height="28"></iconify-icon></a>
+                </i>
+                <span class="tooltip">Contacts</span>
+            </li>
+
+        </ul>
+    </nav>
     <div class="register-box">
         <h2>Register</h2>
         <form asp-action="CheckRegister" onsubmit="return jQueryAjaxAdd(this);">
@@ -111,8 +135,12 @@
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/user_manager.js" asp-append-version="true"></script>
+    <script src="~/js/user_manager.js"></script>
+    <script src="~/js/menu.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
-
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
 </body>
 </html>

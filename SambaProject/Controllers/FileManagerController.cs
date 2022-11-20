@@ -17,13 +17,16 @@ namespace SambaProject.Controllers
         private readonly PhysicalFileProvider operation;
         private readonly NetworkSettings _networkSettings;
         private readonly IAccessRoleService _accessRoleService;
+        private readonly IUserService _userService;
 
         public FileManagerController(
             NetworkSettings networkSettings,
-            IAccessRoleService accessRoleService)
+            IAccessRoleService accessRoleService,
+            IUserService userService)
         {
             _networkSettings = networkSettings;
             _accessRoleService = accessRoleService;
+            _userService = userService;
             operation = new PhysicalFileProvider();
             operation.RootFolder(_networkSettings.NetworkPath);
             operation.SetRules(_accessRoleService.GetAccessDetails());
@@ -115,6 +118,7 @@ namespace SambaProject.Controllers
 
                 foreach (var file in uploadFiles)
                 {
+                    // Назва папки/назва файлу
                     var folders = (file.FileName).Split('/');
 
                     // checking the folder upload
@@ -130,9 +134,7 @@ namespace SambaProject.Controllers
                             newPath += folders[i] + "/";
                         }
                     }
-
                 }
-
 
                 uploadResponse = operation.Upload(path, uploadFiles, action, null);
                 return Content("");
@@ -164,7 +166,8 @@ namespace SambaProject.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(_userService.GetUserByToken().AccessRole == "Owner"
+                || _userService.GetUserByToken().AccessRole == "Admin" ? true : false);
         }
 
         public IActionResult Privacy()
