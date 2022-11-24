@@ -1,45 +1,20 @@
-﻿@model bool
-
-<nav class="sidebar-navigation">
-    <iconify-icon class="main-myButton" icon="mingcute:menu-fill" style="color: white;" width="35" height="35"></iconify-icon>
-    <ul class="content">
-	<li class ="active">
-            <a asp-controller="FileManager" asp-action="Index">
-                <iconify-icon icon="ic:round-home" style="color: white;" width="35" height="35"></iconify-icon>
-            </a>
-            <span class="tooltip">Home</span>
-        </li>
-        @if (Model)
-        {
-            <li>
-                <a asp-controller="UserManager" asp-action="UserManager">
-                    <iconify-icon icon="mdi:user" style="color: white;" width="35" height="35"></iconify-icon>
-                </a>
-                <span class="tooltip">User Manager</span>
-            </li>
-        }
-        <li>
-            <i class="fa fa-newspaper-o">
-                <a asp-controller="Authentication" asp-action="DeleteSession" style="height: 52px;"><iconify-icon icon="humbleicons:logout" style="color: white;" width="28" height="28"></iconify-icon></a>
-            </i>
-            <span class="tooltip">Contacts</span>
-        </li>
-
-    </ul>
-</nav>
-
-<div class="control-section">
-    <div class="sample-container">
-        <ejs-filemanager id="filemanager" allowDragAndDrop="true" allowMultiSelection="true" created="onCreated" height="500px">
-            <e-filemanager-ajaxsettings url="/FileManager/FileOperations"
-                                        downloadUrl="/FileManager/Download"
-                                        uploadUrl="/FileManager/Upload"
-                                        getImageUrl="/FileManager/GetImage">
-            </e-filemanager-ajaxsettings>
-            <e-filemanager-uploadsettings maxFileSize="10737418240"></e-filemanager-uploadsettings>
-        </ejs-filemanager>
-    </div>
+﻿<div class="container">
+    <main role="main" class="pb-3">
+		<div class="control-section">
+			<div class="sample-container">
+				<ejs-filemanager id="filemanager" allowDragAndDrop="true" allowMultiSelection="true" created="onCreated" height="500px">
+					<e-filemanager-ajaxsettings url="/FileManager/FileOperations"
+												downloadUrl="/FileManager/Download"
+												uploadUrl="/FileManager/Upload"
+												getImageUrl="/FileManager/GetImage">
+					</e-filemanager-ajaxsettings>
+					<e-filemanager-uploadsettings maxFileSize="10737418240"></e-filemanager-uploadsettings>
+				</ejs-filemanager>
+			</div>
+		</div>
+    </main>
 </div>
+
 
 <script src="~/js/file_manager.js"></script>
 <script src="~/js/menu.js"></script>

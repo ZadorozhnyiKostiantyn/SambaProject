@@ -1,14 +1,15 @@
 ﻿.main-myButton {
-    margin: 11px;
-}
-
-.content {
-    
-    display: none;
+    margin-top: 5px;
+    margin-left: 11px;
+    margin-bottom: -8px;
 }
 
 body {
     overflow: hidden;
+}
+
+.content {
+    display: none;
 }
 
 .sidebar-navigation {
@@ -18,6 +19,7 @@ body {
     min-height: 100vh;
     width: 60px;
     float: left;
+    margin-left: -5px;
 }
 
     .sidebar-navigation ul {
@@ -28,15 +30,7 @@ body {
         .sidebar-navigation ul li {
             list-style: none;
             padding: 28px 0;
-            margin-left: -35px;
-            cursor: pointer;
-            transition: all ease-out 120ms;
-        }
-
-        .sidebar-navigation-1 ul li {
-            list-style: none;
-            padding: 28px 0;
-            margin-left: -50px;
+            margin-left: -43px;
             cursor: pointer;
             transition: all ease-out 120ms;
         }
@@ -89,83 +83,3 @@ body {
                 .sidebar-navigation ul li.active i {
                     color: #98d7ec;
                 }
-
-
-.sidebar-navigation-1 {
-    font-family: 'Lato', sans-serif;
-    line-height: 1;
-    display: inline-block;
-    min-height: 100vh;
-    width: 60px;
-    float: left;
-}
-
-    .sidebar-navigation-1 ul {
-        text-align: center;
-        color: white;
-    }
-
-        .sidebar-navigation-1 ul li {
-            list-style: none;
-            padding: 28px 0;
-            margin-left: -45px;
-            cursor: pointer;
-            transition: all ease-out 120ms;
-        }
-
-.sidebar-navigation-1 ul li {
-    list-style: none;
-    padding: 28px 0;
-    margin-left: -45px;
-    cursor: pointer;
-    transition: all ease-out 120ms;
-}
-
-.sidebar-navigation-1 ul li i {
-    display: block;
-    font-size: 24px;
-    transition: all ease 450ms;
-}
-
-.sidebar-navigation-1 ul li .tooltip {
-    display: inline-block;
-    position: absolute;
-    background-color: rgba(0,0,0,.5);
-    padding: 8px 15px;
-    border-radius: 3px;
-    margin-top: -26px;
-    left: 90px;
-    opacity: 0;
-    visibility: hidden;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-}
-
-    .sidebar-navigation-1 ul li .tooltip:before {
-        content: '';
-        display: block;
-        position: absolute;
-        left: -4px;
-        top: 10px;
-        transform: rotate(45deg);
-        width: 10px;
-        height: 10px;
-        background-color: inherit;
-    }
-
-.sidebar-navigation-1 ul li:hover {
-    background-color: rgba(0,0,0,.5);
-}
-
-    .sidebar-navigation-1 ul li:hover .tooltip {
-        visibility: visible;
-        opacity: 1;
-    }
-
-.sidebar-navigation-1 ul li.active {
-    background-color: #03e9f4
-}
-
-    .sidebar-navigation-1 ul li.active i {
-        color: #98d7ec;
-    }

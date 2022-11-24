@@ -36,7 +36,6 @@ namespace SambaProject.Service.Authentication
             var user = new User
             {
                 Username = username,
-                Password = password,
                 AccessRoleId = roleId,
             };
             user.Password = _passwordHasher.HashPassword(user, password);

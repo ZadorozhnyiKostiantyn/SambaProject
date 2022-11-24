@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SambaProject.Data.Models
 {
+    [Table("Access Role")]
     public class AccessRole
     {
         [Key]

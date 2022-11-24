@@ -1,24 +1,50 @@
-﻿<!DOCTYPE html>
+﻿@model bool
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]SambaProject</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/navBar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/main.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SambaProject.styles.css" asp-append-version="true" />
     <!-- Syncfusion ASP.NET Core controls styles -->
     <link rel="stylesheet" href="~/css/fluent.css" />
     <script src="https://cdn.syncfusion.com/ej2/20.3.56/dist/ej2.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <nav class="sidebar-navigation">
+        <iconify-icon class="main-myButton" icon="mingcute:menu-fill" style="color: white;" width="35" height="35"></iconify-icon>
+        <ul class="content">
+            <a asp-controller="FileManager" asp-action="Index">
+            <li class="active">
+                <iconify-icon icon="ic:round-home" style="color: white;" width="35" height="35"></iconify-icon>
+                <span class="tooltip">Home</span>
+            </li>
+            </a>
+            @if (Model)
+            {
+                <a asp-controller="UserManager" asp-action="UserManager">
+                <li>
+                    <iconify-icon icon="mdi:user" style="color: white;" width="35" height="35"></iconify-icon>
+                    <span class="tooltip">User Manager</span>
+                </li>
+                </a>
+            }
+            <a asp-controller="Authentication" asp-action="DeleteSession" style="height: 52px;">
+            <li>
+                <iconify-icon icon="humbleicons:logout" style="color: white;" width="28" height="28"></iconify-icon>
+                <span class="tooltip">Log out</span>
+            </li>
+            </a>
+        </ul>
+    </nav>
+    
+    @RenderBody()
+    
     
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

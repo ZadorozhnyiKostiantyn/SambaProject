@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SambaProject.Data.Models
 {
+    [Table("User")]
     public class User
     {
         [Key]

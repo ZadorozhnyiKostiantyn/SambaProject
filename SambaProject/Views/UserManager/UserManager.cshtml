@@ -22,28 +22,27 @@
     <link rel="stylesheet" type="text/css" href="~/css/navBar.css" />
 </head>
 <body>
-    <nav class="sidebar-navigation-1">
+    <nav class="sidebar-navigation">
         <iconify-icon class="main-myButton" icon="mingcute:menu-fill" style="color: white;" width="35" height="35"></iconify-icon>
         <ul class="content">
-            <li>
-                <a asp-controller="FileManager" asp-action="Index">
+            <a asp-controller="FileManager" asp-action="Index">
+                <li>
                     <iconify-icon icon="ic:round-home" style="color: white;" width="35" height="35"></iconify-icon>
-                </a>
-                <span class="tooltip">Home</span>
-            </li>
-            <li class="active">
-                <a asp-controller="UserManager" asp-action="UserManager">
+                    <span class="tooltip">Home</span>
+                </li>
+            </a>
+            <a asp-controller="UserManager" asp-action="UserManager">
+                <li class="active">
                     <iconify-icon icon="mdi:user" style="color: white;" width="35" height="35"></iconify-icon>
-                </a>
-                <span class="tooltip">User Manager</span>
-            </li>
-            <li>
-                <i class="fa fa-newspaper-o">
-                    <a asp-controller="Authentication" asp-action="DeleteSession" style="height: 52px;"><iconify-icon icon="humbleicons:logout" style="color: white;" width="28" height="28"></iconify-icon></a>
-                </i>
-                <span class="tooltip">Contacts</span>
-            </li>
-
+                    <span class="tooltip">User Manager</span>
+                </li>
+            </a>
+            <a asp-controller="Authentication" asp-action="DeleteSession" style="height: 52px;">
+                <li>
+                    <iconify-icon icon="humbleicons:logout" style="color: white;" width="28" height="28"></iconify-icon>
+                    <span class="tooltip">Log out</span>
+                </li>
+            </a>
         </ul>
     </nav>
     <div class="register-box">
@@ -69,7 +68,6 @@
     </div>
 
     <div class="container">
-
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">

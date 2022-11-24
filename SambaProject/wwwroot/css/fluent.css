@@ -44554,7 +44554,7 @@ label[for*=_wholeWord_e-de-rtl] {
 }
 
     .e-splitter.e-splitter-horizontal .e-pane, .e-splitter.e-splitter-vertical .e-pane {
-        color: #201f1e;
+        color: #fff;
     }
 
         .e-splitter.e-splitter-horizontal .e-pane.e-splitter.e-splitter-horizontal, .e-splitter.e-splitter-horizontal .e-pane.e-splitter.e-splitter-vertical, .e-splitter.e-splitter-vertical .e-pane.e-splitter.e-splitter-horizontal, .e-splitter.e-splitter-vertical .e-pane.e-splitter.e-splitter-vertical {
@@ -52029,8 +52029,8 @@ ejs-filemanager {
         }
 
             .e-filemanager .e-address .e-address-list-item:focus .e-list-text {
-                background: #f3f2f1;
-                color: #201f1e;
+                background: rgba(0,0,0,.5);
+                color: #fff;
             }
 
             .e-filemanager .e-address .e-address-list-item:last-child .e-list-text {
@@ -52038,18 +52038,18 @@ ejs-filemanager {
             }
 
             .e-filemanager .e-address .e-address-list-item:not(:last-child) .e-list-text:hover {
-                background: #f3f2f1;
-                color: #201f1e;
+                background: rgba(0,0,0,.5);
+                color: #fff;
             }
 
             .e-filemanager .e-address .e-address-list-item:not(:last-child) .e-list-text:active {
-                background: #f3f2f1;
-                color: #201f1e;
+                background: rgba(0,0,0,.5);
+                color: #fff;
             }
 
             .e-filemanager .e-address .e-address-list-item:not(:last-child) .e-list-text:focus {
-                background: #f3f2f1;
-                color: #201f1e;
+                background: rgba(0,0,0,.5);
+                color: #fff;
             }
 
         .e-filemanager .e-address .e-search-wrap .e-input-group.e-control-wrapper:not(.e-success) {

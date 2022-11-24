@@ -53,8 +53,4 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Configuration\" />
-  </ItemGroup>
-
 </Project>

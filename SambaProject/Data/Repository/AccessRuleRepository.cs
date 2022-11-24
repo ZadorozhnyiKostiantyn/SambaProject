@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SambaProject.Data.Models;
+﻿using SambaProject.Data.Models;
 
 namespace SambaProject.Data.Repository
 {

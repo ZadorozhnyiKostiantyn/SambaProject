@@ -36,5 +36,7 @@ var app = builder.Build();
         name: "default",
         pattern: "{controller=FileManager}/{action=Index}/{id?}");
 
+    app.DbInitialize();
+
     app.Run();
 }
