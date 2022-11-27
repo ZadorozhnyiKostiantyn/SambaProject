@@ -1,5 +1,9 @@
 using SambaProject.Data;
 
+Syncfusion.Licensing
+    .SyncfusionLicenseProvider
+    .RegisterLicense("Mgo+DSMBPh8sVXJ0S0V+XE9AcVRDX3xKf0x/TGpQb19xflBPallYVBYiSV9jS3xSd0dkWH1bcXZRRGFeUw==");
+
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services.AddSession();
