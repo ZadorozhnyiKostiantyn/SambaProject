@@ -49,7 +49,7 @@ namespace SambaProject.Controllers
             return Json(
                 new UserModel
                 {
-                    Id = newUser.UserId,
+                    Id = newUser.Id,
                     Username = user.Username,
                     AccessRole = _accessRoleService.GetRoleById(user.AccessRoleId).Role
                 }
@@ -68,20 +68,22 @@ namespace SambaProject.Controllers
             Console.WriteLine(Int32.Parse(value["id"]));
             Console.WriteLine(value["username"]);
             Console.WriteLine(value["accessRoleId"]);
-            var user = new User
+            var user = await _userService.GetUserByIdAsync(Int32.Parse(value["id"]));
+            var newData = new User
             {
-                UserId = Int32.Parse(value["id"]),
+                Id = Int32.Parse(value["id"]),
                 Username = value["username"],
+                Password = user.Password,
                 AccessRoleId = Int16.Parse(value["accessRoleId"])
             };
-            await _userService.UpdateUserAsync(user);
+            await _userService.UpdateUserAsync(newData);
 
             var role = _accessRoleService.GetRoleById(Int16.Parse(value["accessRoleId"]));
 
             UserModel newUser = new UserModel
             {
-                Id = user.UserId,
-                Username = user.Username,
+                Id = newData.Id,
+                Username = newData.Username,
                 AccessRole = role.Role
             };
 

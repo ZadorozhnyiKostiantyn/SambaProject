@@ -10,13 +10,13 @@ namespace SambaProject.Service.Authentication
         private readonly IJwtTokenGeneratorService _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
-        private readonly IAccessRoleRepository _accessRoleRepository;
+        private readonly IRepository<AccessRole> _accessRoleRepository;
 
         public AuthenticationService(
             IJwtTokenGeneratorService jwtTokenGenerator,
             IUserRepository userReporitory,
             IPasswordHasher<User> passwordHasher,
-            IAccessRoleRepository accessRoleRepository)
+            IRepository<AccessRole> accessRoleRepository)
         {
             _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userReporitory;
@@ -40,7 +40,7 @@ namespace SambaProject.Service.Authentication
             };
             user.Password = _passwordHasher.HashPassword(user, password);
 
-            await _userRepository.AddUserAsync(user);
+            await _userRepository.AddAsync(user);
         }
 
         public async Task<AuthenticationResult> Login(string userName, string password)
@@ -58,7 +58,7 @@ namespace SambaProject.Service.Authentication
             }
 
             // 3. Create JWT Token
-            var token = _jwtTokenGenerator.GenerateToken(user, _accessRoleRepository.GetAccessRoleById(user.AccessRoleId));
+            var token = _jwtTokenGenerator.GenerateToken(user, _accessRoleRepository.GetById(user.AccessRoleId));
 
             return new AuthenticationResult(user, token);
 

@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SambaProject.Data.Models
 {
     [Table("Access Rule")]
-    public class AccessRuleRoles
+    public class AccessRuleRoles : IEntity
     {
         [Key]
-        public int AccessRuleRolesId { get; set; }
+        [Column("AccessRuleRolesId")]
+        public int Id { get; set; }
 
         [Required]
         public string Path { get; set; } = null!;

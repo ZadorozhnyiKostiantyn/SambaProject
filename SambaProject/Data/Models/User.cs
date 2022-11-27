@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace SambaProject.Data.Models
 {
     [Table("User")]
-    public class User
+    public class User : IEntity
     {
         [Key]
-        public int UserId { get; set; }
+        [Column("UserId")]
+        public int Id { get; set; }
 
         [Required]
         public string Username { get; set; } = null!;

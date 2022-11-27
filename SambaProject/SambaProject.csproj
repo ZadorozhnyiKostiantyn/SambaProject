@@ -35,6 +35,10 @@
     <Compile Remove="20221028195143_SecondMigration.cs" />
     <Compile Remove="20221028195143_SecondMigration.Designer.cs" />
     <Compile Remove="ApplicationDbContextModelSnapshot.cs" />
+    <Compile Remove="Data\Repository\AccessRoleRepository.cs" />
+    <Compile Remove="Data\Repository\AccessRuleRepository.cs" />
+    <Compile Remove="Data\Repository\IAccessRoleRepository.cs" />
+    <Compile Remove="Data\Repository\IAccessRuleRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>

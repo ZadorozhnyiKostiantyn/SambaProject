@@ -1,50 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using SambaProject.Data.Models;
 
 namespace SambaProject.Data.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : EFRepository<User>, IUserRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public UserRepository(ApplicationDbContext context)
+        public UserRepository(ApplicationDbContext context) : base(context)
         {
             _context = context;
-        }
-
-        public async Task AddUserAsync(User user)
-        {
-            if (user.Username.IsNullOrEmpty())
-            {
-                throw new ArgumentException("No correctly Data");
-            }
-
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteUserAsync(int userId)
-        {
-            
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserId == userId);
-            if (user == null)
-            {
-                throw new ArgumentNullException("This user is not exist");
-            }
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<List<User>> GetAllUserAsync()
-        {
-            var users = await _context.Users.ToListAsync();
-            return users;
-        }
-
-        public async Task<User?> GetUserByIdAsync(int userId)
-        {
-            return await _context.Users.SingleOrDefaultAsync(u => u.UserId == userId);
         }
 
         public async Task<User?> GetUserByUsernameAsync(string username)
@@ -67,37 +32,37 @@ namespace SambaProject.Data.Repository
             }
             else
             {
-                await GetAllUserAsync();
+                return await _context.Users.ToListAsync();
             }
 
             return await users.ToListAsync();
         }
 
-        public async Task UpdateUserAsync(User newData)
-        {
-            if (newData == null)
-            {
-                throw new ArgumentNullException("New data is null");
-            }
+        //public async Task UpdateUserAsync(User newData)
+        //{
+        //    if (newData == null)
+        //    {
+        //        throw new Exception("New data is null");
+        //    }
 
-            var user = await _context.Users.SingleOrDefaultAsync(u => u.UserId == newData.UserId);
+        //    var user = await _context.Users.SingleOrDefaultAsync(u => u.Id == newData.Id);
 
-            if (user == null)
-            {
-                throw new ArgumentNullException("This user is not exist");
-            }
+        //    if (user == null)
+        //    {
+        //        throw new Exception("This user is not exist");
+        //    }
 
-            if(user.Username != newData.Username)
-            {
-                user.Username = newData.Username;
-            }
+        //    if (user.Username != newData.Username)
+        //    {
+        //        user.Username = newData.Username;
+        //    }
 
-            if (user.AccessRoleId != newData.AccessRoleId)
-            {
-                user.AccessRoleId = newData.AccessRoleId;
-            }
+        //    if (user.AccessRoleId != newData.AccessRoleId)
+        //    {
+        //        user.AccessRoleId = newData.AccessRoleId;
+        //    }
 
-            await _context.SaveChangesAsync();
-        }
+        //    await _context.SaveChangesAsync();
+        //}
     }
 }

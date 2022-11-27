@@ -7,7 +7,7 @@
     List<SelectListItem> accessRoleList = new List<SelectListItem>();
     foreach (var accessRole in Model.AccessRoles)
     {
-        accessRoleList.Add(new SelectListItem { Text = accessRole.Role, Value = accessRole.AccessRoleId.ToString() });
+        accessRoleList.Add(new SelectListItem { Text = accessRole.Role, Value = accessRole.Id.ToString() });
     }
 
     SelectList selectList = new SelectList(accessRoleList, "Value", "Text");
@@ -77,7 +77,6 @@
                     <div class="col-sm-6">
                         <form class="search-container" method="post">
                             <input id="search-username" type="text" placeholder="Search.." name="search">
-                            @*<button id="search-btn" type="submit"><iconify-icon icon="fe:search"></iconify-icon></button>*@
                         </form>
                     </div>
                 </div>
@@ -110,8 +109,6 @@
                             <td id="drop-down-user-@user.Id">@user.AccessRole</td>
                             
                             <td id="buttons-@user.Id">
-
-                                @*<a id="edit-user-@user.UserId" onclick="changeTdToInputAndSelect('#user-@user.UserId', '@user.Username', '#drop-down-user-@user.UserId', '#buttons-@user.UserId')" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit"><iconify-icon icon="eva:edit-outline" width="27" height="27"></iconify-icon></i></a>*@
                                 <a id="edit-user-@user.Id" onclick="changeTdToInputAndSelect(@user.Id, '@user.Username')" class="edit" data-toggle="modal">
                                     <i>
                                         <iconify-icon icon="eva:edit-outline" width="27" height="27"></iconify-icon>

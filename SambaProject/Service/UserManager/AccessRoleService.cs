@@ -7,12 +7,12 @@ namespace SambaProject.Service.UserManager
 {
     public class AccessRoleService : IAccessRoleService
     {
-        private readonly IAccessRoleRepository _accessRoleRepository;
+        private readonly IRepository<AccessRole> _accessRoleRepository;
         private readonly IAccessRuleService _accessRuleService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IJwtDecodingService _jwtDecodingService;
         public AccessRoleService(
-            IAccessRoleRepository accessRoleRepository,
+            IRepository<AccessRole> accessRoleRepository,
             IAccessRuleService accessRuleService,
             IHttpContextAccessor httpContextAccessor,
             IJwtDecodingService jwtDecodingService)
@@ -32,16 +32,14 @@ namespace SambaProject.Service.UserManager
             };
         }
 
-        
-
         public List<AccessRole> GetAllRoles()
         {
-            return _accessRoleRepository.GetAllAccessRole();
+            return _accessRoleRepository.GetAll();
         }
 
         public AccessRole? GetRoleById(int id)
         {
-            return _accessRoleRepository.GetAccessRoleById(id);
+            return _accessRoleRepository.GetById(id);
         }
     }
 }

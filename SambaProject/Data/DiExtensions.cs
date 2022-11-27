@@ -18,9 +18,8 @@ namespace SambaProject.Data
         public static IServiceCollection AddData(this IServiceCollection services, ConfigurationManager configuration)
         {
             services.AddScoped<ApplicationDbContext>();
+            services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IAccessRoleRepository, AccessRoleRepository>();
-            services.AddScoped<IAccessRuleRepository, AccessRuleRepository>();
 
             services.AddDbContextPool<ApplicationDbContext>(options =>
                 options.UseMySql(configuration.GetConnectionString("MySqlDatabase"),

@@ -8,9 +8,9 @@ namespace SambaProject.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<AccessRole> builder)
         {
-            builder.HasKey(a => a.AccessRoleId);
+            builder.HasKey(a => a.Id);
 
-            builder.Property(a => a.AccessRoleId)
+            builder.Property(a => a.Id)
                 .IsRequired()
                 .ValueGeneratedOnAdd();
             builder.Property(a => a.Role).IsRequired();

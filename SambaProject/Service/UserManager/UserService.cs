@@ -38,25 +38,25 @@ namespace SambaProject.Service.UserManager
 
         public async Task DeleteUserAsync(int userId)
         {
-            await _userRepository.DeleteUserAsync(userId);
+            await _userRepository.DeleteAsync(userId);
         }
 
         public async Task<List<User>> GetAllUsersAsync()
         {
-            return await _userRepository.GetAllUserAsync();
+            return await _userRepository.GetAllAsync();
         }
 
-        public async Task<User> GetUserByIdAsync(int userId)
+        public async Task<User?> GetUserByIdAsync(int userId)
         {
-            return await _userRepository.GetUserByIdAsync(userId);
+            return await _userRepository.GetByIdAsync(userId);
         }
 
         public UserModel GetUserByToken()
         {
-            return _jwtDecodingService.DecodeToken(_httpContextAccessor.HttpContext.Session.GetString("Token"));
+            return _jwtDecodingService.DecodeToken(_httpContextAccessor.HttpContext.Session?.GetString("Token"));
         }
 
-        public async Task<User> GetUserByUsernameAsync(string username)
+        public async Task<User?> GetUserByUsernameAsync(string username)
         {
             return await _userRepository.GetUserByUsernameAsync(username);
         }
@@ -72,7 +72,7 @@ namespace SambaProject.Service.UserManager
                 result.Add(
                     new UserModel
                     {
-                        Id = user.UserId,
+                        Id = user.Id,
                         Username = user.Username,
                         AccessRole = _accessRoleService.GetRoleById(user.AccessRoleId).Role
                     }
@@ -85,7 +85,7 @@ namespace SambaProject.Service.UserManager
 
         public async Task UpdateUserAsync(User newData)
         {
-            await _userRepository.UpdateUserAsync(newData);
+             await _userRepository.Update(newData);
         }
     }
 }

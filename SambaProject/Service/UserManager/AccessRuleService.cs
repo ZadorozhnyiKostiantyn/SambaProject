@@ -1,17 +1,18 @@
-﻿using SambaProject.Data.Repository;
+﻿using SambaProject.Data.Models;
+using SambaProject.Data.Repository;
 using Syncfusion.EJ2.FileManager.Base;
 
 namespace SambaProject.Service.UserManager
 {
     public class AccessRuleService : IAccessRuleService
     {
-        private readonly IAccessRuleRepository _accessRuleRepository;
-        private readonly IAccessRoleRepository _accessRoleRepository;
+        private readonly IRepository<AccessRuleRoles> _accessRuleRepository;
+        private readonly IRepository<AccessRole> _accessRoleRepository;
 
 
         public AccessRuleService(
-            IAccessRuleRepository accessRuleRepository,
-            IAccessRoleRepository accessRoleRepository)
+            IRepository<AccessRuleRoles> accessRuleRepository,
+            IRepository<AccessRole> accessRoleRepository)
         {
             _accessRuleRepository = accessRuleRepository;
             _accessRoleRepository = accessRoleRepository;
@@ -20,12 +21,12 @@ namespace SambaProject.Service.UserManager
         public List<AccessRule> GetAccessRules()
         {
             List<AccessRule> accessRules = new List<AccessRule>();
-            var listRules = _accessRuleRepository.GetAllRule();
-            var listRoles = _accessRoleRepository.GetAllAccessRole();
+            var listRules = _accessRuleRepository.GetAll();
+            var listRoles = _accessRoleRepository.GetAll();
             
             foreach (var rule in listRules)
             {
-                var role = listRoles.SingleOrDefault(r => r?.AccessRoleId == rule.AccessRoleId)?.Role;
+                var role = listRoles.SingleOrDefault(r => r?.Id == rule.AccessRoleId)?.Role;
                 accessRules.Add(
                     new AccessRule
                     {

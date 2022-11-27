@@ -7,9 +7,10 @@ function changeTdToInputAndSelect(id, valueInput) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (accessRoles) {
-             let inputId = `#user-${id}`;
-             let selectId = `#drop-down-user-${id}`;
-             let tdButtonsId = `#buttons-${id}`;
+            console.log(accessRoles);
+            let inputId = `#user-${id}`;
+            let selectId = `#drop-down-user-${id}`;
+            let tdButtonsId = `#buttons-${id}`;
 
             var $input = $('<input>', {
                 value: valueInput,
@@ -20,7 +21,7 @@ function changeTdToInputAndSelect(id, valueInput) {
             var option = `<select id="select-role-${id}">`;
 
             $.each(accessRoles, function (i, accessRole) {
-                option += `<option value="${accessRole.accessRoleId}" name="${accessRole.role}">${accessRole.role}</option>`;
+                option += `<option value="${accessRole.id}" name="${accessRole.role}">${accessRole.role}</option>`;
             });
             option += `</select>`;
 
@@ -165,7 +166,7 @@ function editUser(id, selectId) {
     formData.append("id", id);
     formData.append("username", document.querySelector(inputId).value);
     formData.append("accessRoleId", $(selectId + " option:selected").val());
-
+    console.log($(selectId + " option:selected").val());
     $.ajax({
         type: 'PUT',
         url: 'UserManager/EditUser',
@@ -175,6 +176,7 @@ function editUser(id, selectId) {
         data: formData,
         success: function (user) {
             //document.getElementById($`tr-${id}`).contentWindow.location.reload(true);
+            console.log(user);
             let tdUsernameId = `#user-${id}`;
             let tdAccessRoleId = `#drop-down-user-${id}`;
             let tdButtonsId = `#buttons-${id}`;

@@ -1,5 +1,4 @@
 using SambaProject.Data;
-using SambaProject.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 {
