@@ -1,4 +1,5 @@
 ﻿using SambaProject.Data.Models;
+using System.Linq.Expressions;
 
 namespace SambaProject.Data.Repository
 {
@@ -9,6 +10,8 @@ namespace SambaProject.Data.Repository
         public Task Update(TEntity newData);
         public Task<TEntity?> GetByIdAsync(int id);
         public Task<List<TEntity>> GetAllAsync();
+        public Task<List<TEntity>> SearchAsync(Expression<Func<TEntity, bool>> predicate);
+        public Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         public TEntity? GetById(int id);
         public List<TEntity> GetAll();
 

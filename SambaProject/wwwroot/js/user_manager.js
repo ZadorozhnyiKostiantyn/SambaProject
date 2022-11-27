@@ -92,16 +92,16 @@ function getTr(user) {
         id: `tr-${user.id}`
     });
 
-    // Check Box
-    let $tdCheckBox = document.createElement('td');
+    //// Check Box
+    //let $tdCheckBox = document.createElement('td');
 
-    $tdCheckBox.innerHTML =
-        `<span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                        <label for="checkbox1"></label>
-                    </span>`;
+    //$tdCheckBox.innerHTML =
+    //    `<span class="custom-checkbox">
+    //                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
+    //                    <label for="checkbox1"></label>
+    //                </span>`;
 
-    $tr.append($tdCheckBox);
+    //$tr.append($tdCheckBox);
 
     // Username
     let $tdUsername = $('<td>', {

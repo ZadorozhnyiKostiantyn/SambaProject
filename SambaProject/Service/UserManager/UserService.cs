@@ -8,14 +8,14 @@ namespace SambaProject.Service.UserManager
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IRepository<User> _userRepository;
         private readonly IAuthenticationService _authenticationService;
         private readonly IAccessRoleService _accessRoleService;
         private readonly IJwtDecodingService _jwtDecodingService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
         public UserService(
-            IUserRepository userRepository,
+            IRepository<User> userRepository,
             IAuthenticationService authenticationService,
             IAccessRoleService accessRoleService,
             IJwtDecodingService jwtDecodingService,
@@ -58,12 +58,21 @@ namespace SambaProject.Service.UserManager
 
         public async Task<User?> GetUserByUsernameAsync(string username)
         {
-            return await _userRepository.GetUserByUsernameAsync(username);
+            return await _userRepository.SingleOrDefaultAsync(u => u.Username == username);
         }
 
         public async Task<List<UserModel>> SearchAsync(string query)
         {
-            var users = await _userRepository.SearchUsersAsync(query);
+            List<User> users;
+
+            if (String.IsNullOrEmpty(query))
+            {
+                users = await _userRepository.GetAllAsync();
+            }
+            else
+            {
+                users = await _userRepository.SearchAsync(u => u.Username!.Contains(query));
+            }
 
             List<UserModel> result = new List<UserModel>();
 

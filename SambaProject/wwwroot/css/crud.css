@@ -26,36 +26,15 @@
 
 .table-title .search-container {
     float: right;
+    margin-top: -30px;
 }
 
 .table-title .search-container input[type=text] {
     padding: 6px;
-    margin-top: -30px;
+    
     font-size: 13px;
     border: none;
     background: #fff;
-}
-
-.table-title .search-container button {
-    float: right;
-    margin-top: -30px;
-    padding: 6px 7px;
-    margin-right: 16px;
-    background: #ddd;
-    font-size: 15px;
-    border: none;
-    cursor: pointer;
-    background-color: rgba(0,0,0,.5);
-    color: #03e9f4;
-    letter-spacing: 4px;
-    border-radius: 5px;
-}
-
-.table-title .search-container button:hover {
-    background: #03e9f4;
-    color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 100px #03e9f4;
 }
 
 table.table tbody, table.table thead{
@@ -79,15 +58,15 @@ table.table tr th, table.table tr td {
     vertical-align: middle;
 }
 
-    table.table tr th:first-child {
+    /*table.table tr th:first-child {
         width: 20px;
-    }
+    }*/
 
-    table.table tr th:nth-child(2) {
+    table.table tr th:nth-child(1) {
         width: 300px;
     }
 
-    table.table tr th:nth-child(3) {
+    table.table tr th:nth-child(2) {
         width: 200px;
     }
 
@@ -124,16 +103,16 @@ table.table th i {
     cursor: pointer;
 }
 
+table.table tr td:nth-child(1) {
+    width: 290px;
+}
+
 table.table tr td:nth-child(2) {
-    width: 220px;
+    width: 200px;
 }
 
 table.table tr td:nth-child(3) {
-    width: 163px;
-}
-
-table.table tr td:nth-child(4) {
-    width: 82px;
+    width: 100px;
 }
 
 table.table td:last-child i {

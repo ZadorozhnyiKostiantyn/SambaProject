@@ -8,13 +8,13 @@ namespace SambaProject.Service.Authentication
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IJwtTokenGeneratorService _jwtTokenGenerator;
-        private readonly IUserRepository _userRepository;
+        private readonly IRepository<User> _userRepository;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IRepository<AccessRole> _accessRoleRepository;
 
         public AuthenticationService(
             IJwtTokenGeneratorService jwtTokenGenerator,
-            IUserRepository userReporitory,
+            IRepository<User> userReporitory,
             IPasswordHasher<User> passwordHasher,
             IRepository<AccessRole> accessRoleRepository)
         {
@@ -27,7 +27,7 @@ namespace SambaProject.Service.Authentication
         public async Task Register(string username, string password, int roleId)
         {
             // 1. Validate the user doesn't exist
-            if (await _userRepository.GetUserByUsernameAsync(username) is not null)
+            if (await _userRepository.SingleOrDefaultAsync(u => u.Username == username) is not null)
             {
                 throw new Exception("User with given username already exists.");
             }
@@ -43,10 +43,10 @@ namespace SambaProject.Service.Authentication
             await _userRepository.AddAsync(user);
         }
 
-        public async Task<AuthenticationResult> Login(string userName, string password)
+        public async Task<AuthenticationResult> Login(string username, string password)
         {
             // 1. Validate the user exists
-            if (await _userRepository.GetUserByUsernameAsync(userName) is not User user)
+            if (await _userRepository.SingleOrDefaultAsync(u => u.Username == username) is not User user)
             {
                 throw new Exception("User with given username does not exist.");
             }

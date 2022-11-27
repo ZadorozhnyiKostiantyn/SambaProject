@@ -33,7 +33,7 @@ namespace SambaProject.Service.Connection
 
             if (result != 0)
             {
-                throw new Win32Exception(result, "Error connecting to remote share");
+                //throw new Win32Exception(result, "Error connecting to remote share");
             }
         }
 

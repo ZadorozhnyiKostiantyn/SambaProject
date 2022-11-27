@@ -19,13 +19,11 @@ namespace SambaProject.Data
         {
             services.AddScoped<ApplicationDbContext>();
             services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
-            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddDbContextPool<ApplicationDbContext>(options =>
                 options.UseMySql(configuration.GetConnectionString("MySqlDatabase"),
                                  ServerVersion.AutoDetect(configuration.GetConnectionString("MySqlDatabase")))
             );
-
             return services;
         }
 

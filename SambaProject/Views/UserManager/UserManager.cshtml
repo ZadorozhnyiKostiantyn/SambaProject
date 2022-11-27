@@ -45,7 +45,7 @@
             </a>
         </ul>
     </nav>
-    <div class="register-box">
+    <div style="display: inline-block;" class="register-box">
         <h2>Register</h2>
         <form asp-action="CheckRegister" onsubmit="return jQueryAjaxAdd(this);">
             <div class="user-box">
@@ -67,7 +67,7 @@
         </form>
     </div>
 
-    <div class="container">
+    <div style="display: inline-block;" class="container">
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -84,11 +84,11 @@
             <table class="table table-striped table-hover" id="tblUser">
                 <thead>
                     <tr>
-                        <th>
+                        @*<th>
                             <span class="custom-checkbox">
                                 <input type="checkbox" id="selectAll">
                                 <label for="selectAll"></label>
-                            </span>
+                            </span>*@
                         </th>
                         <th>Username</th>
                         <th>Access_Role</th>
@@ -99,12 +99,12 @@
                     @foreach (var user in Model.Users)
                     {
                         <tr id="tr-@user.Id">
-                            <td>
+                            @*<td>
                                 <span class="custom-checkbox">
                                     <input type="checkbox" id="checkbox1" name="options[]" value="1">
                                     <label for="checkbox1"></label>
                                 </span>
-                            </td>
+                            </td>*@
                             <td id="user-@user.Id">@user.Username</td>
                             <td id="drop-down-user-@user.Id">@user.AccessRole</td>
                             

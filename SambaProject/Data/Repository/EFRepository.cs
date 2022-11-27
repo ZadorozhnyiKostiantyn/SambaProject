@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SambaProject.Data.Models;
+using System.Linq.Expressions;
 
 namespace SambaProject.Data.Repository
 {
@@ -44,6 +45,20 @@ namespace SambaProject.Data.Repository
         public async Task<TEntity?> GetByIdAsync(int id)
         {
             return await _context.Set<TEntity>().FindAsync(id);
+        }
+
+        public async Task<List<TEntity>> SearchAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            var entities = from e in _context.Set<TEntity>() select e;
+
+            entities = entities.Where(predicate);
+
+            return await entities.ToListAsync();
+        }
+
+        public async Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
 
         public async Task Update(TEntity newData)
