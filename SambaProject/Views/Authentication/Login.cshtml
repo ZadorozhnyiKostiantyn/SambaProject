@@ -2,19 +2,21 @@
 @{
     Layout = null;
     ViewData["Title"] = "Login";
+    ViewData["ErrorMassage"] = ViewBag.ErrorMassage;
 }
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="~/css/main.css" />
     <link rel="stylesheet" type="text/css" href="~/css/login.css" />
 </head>
 
 <body>
     <div class="login-box">
-    <h2>Samba</h2>
+    <h3>Samba</h3>
     <form method="post" asp-controller="Authentication" asp-action="CheckLogin">
         <div class="user-box">
             <input asp-for="Username" type="text" name="username" required>
@@ -24,6 +26,17 @@
             <input asp-for="Password" type="password" name="Password" required>
             <label>Password</label>
         </div>
+		@if (TempData["ErrorMessage"] is not null)
+		{
+            <div class="alert alert-info" style="
+                padding-bottom: 1px;
+                padding-top: 3px;
+                margin-bottom: 0px;
+                height: 32px;
+            ">
+				<p>@TempData["ErrorMessage"]</p>
+			</div>
+		}
         <button type="submit">
             Submit
         </button>

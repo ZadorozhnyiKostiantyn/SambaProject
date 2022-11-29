@@ -7,9 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 using SambaProject.Data.Models;
 using SambaProject.Data.Repository;
 using SambaProject.Models;
-using SambaProject.Service.UserManager;
-using SambaProject.Service.Authentication;
 using System.Text;
+using SambaProject.Service.Authentication.Interface;
+using SambaProject.Service.Authentication.Services;
+using SambaProject.Service.UserManager.Interface;
+using SambaProject.Service.UserManager.Services;
 
 namespace SambaProject.Data
 {
@@ -21,8 +23,9 @@ namespace SambaProject.Data
             services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 
             services.AddDbContextPool<ApplicationDbContext>(options =>
-                options.UseMySql(configuration.GetConnectionString("MySqlDatabase"),
-                                 ServerVersion.AutoDetect(configuration.GetConnectionString("MySqlDatabase")))
+                options.UseMySql(
+                    configuration.GetConnectionString("MySqlDatabase"),
+                    ServerVersion.AutoDetect(configuration.GetConnectionString("MySqlDatabase")))
             );
             return services;
         }

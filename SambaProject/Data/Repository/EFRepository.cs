@@ -63,7 +63,7 @@ namespace SambaProject.Data.Repository
 
         public async Task Update(TEntity newData)
         {
-            var entity = _context.Set<TEntity>().Find(newData.Id);
+            var entity = await _context.Set<TEntity>().FindAsync(newData.Id);
             _context.Entry(entity).CurrentValues.SetValues(newData);
             await _context.SaveChangesAsync();
         }

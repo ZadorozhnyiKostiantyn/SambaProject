@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SambaProject.Data.Models;
-using SambaProject.Helpers.Attribute;
 using SambaProject.Models;
-using SambaProject.Service.UserManager;
-using SambaProject.Service.Authentication;
+using SambaProject.Attributes;
+using SambaProject.Error;
+using SambaProject.Service.Authentication.Interface;
+using SambaProject.Service.UserManager.Interface;
+using SambaProject.Models.ViewModel;
 
 namespace SambaProject.Controllers
 {
@@ -39,20 +41,30 @@ namespace SambaProject.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckRegister(User user)
         {
-            await _authenticationService.Register(
+            var authResult = await _authenticationService.Register(
                     user.Username,
                     user.Password,
                     user.AccessRoleId);
 
+            if (authResult.IsError && authResult.FirstError == Errors.User.DuplicateUsername)
+            {
+                return Json(new { success = false, ErrorMessage = Errors.User.DuplicateUsername.Description});
+            }
+
             var newUser = await _userService.GetUserByUsernameAsync(user.Username);
 
             return Json(
-                new UserModel
+                new
                 {
-                    Id = newUser.Id,
-                    Username = user.Username,
-                    AccessRole = _accessRoleService.GetRoleById(user.AccessRoleId).Role
+                    success = true, 
+                    user = new UserModel
+                    {
+                        Id = newUser.Id,
+                        Username = user.Username,
+                        AccessRole = _accessRoleService.GetRoleById(user.AccessRoleId).Role
+                    }
                 }
+                
             );
         }
 

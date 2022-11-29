@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SambaProject.Data.Models;
-using SambaProject.Service.Authentication;
+using SambaProject.Error;
+using SambaProject.Service.Authentication.Interface;
 
 namespace SambaProject.Controllers
 {
@@ -29,12 +30,13 @@ namespace SambaProject.Controllers
                 user.Username,
                 user.Password);
 
-            if (authResult == null)
+            if (authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
             {
+                TempData["ErrorMessage"] = Errors.Authentication.InvalidCredentials.Description;
                 return RedirectToAction("Login");
             }
 
-            HttpContext.Session.SetString("Token", authResult.Token);
+            HttpContext.Session.SetString("Token", authResult.Value.Token);
             return RedirectToAction("Index", "FileManager");
         }
 

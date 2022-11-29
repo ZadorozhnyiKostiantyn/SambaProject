@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SambaProject.Helpers.Attribute;
 using SambaProject.Models;
-using SambaProject.Service.UserManager;
 using SambaProject.Service.Connection;
 using Syncfusion.EJ2.FileManager.Base;
 using Syncfusion.EJ2.FileManager.PhysicalFileProvider;
 using System.Diagnostics;
 using System.Net;
+using SambaProject.Attributes;
+using SambaProject.Service.UserManager.Interface;
+using SambaProject.Models.ViewModel;
 
 namespace SambaProject.Controllers
 {
@@ -168,11 +169,6 @@ namespace SambaProject.Controllers
         {
             return View(_userService.GetUserByToken().AccessRole == "Owner"
                 || _userService.GetUserByToken().AccessRole == "Admin" ? true : false);
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

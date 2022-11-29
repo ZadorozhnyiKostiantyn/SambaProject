@@ -92,17 +92,6 @@ function getTr(user) {
         id: `tr-${user.id}`
     });
 
-    //// Check Box
-    //let $tdCheckBox = document.createElement('td');
-
-    //$tdCheckBox.innerHTML =
-    //    `<span class="custom-checkbox">
-    //                    <input type="checkbox" id="checkbox1" name="options[]" value="1">
-    //                    <label for="checkbox1"></label>
-    //                </span>`;
-
-    //$tr.append($tdCheckBox);
-
     // Username
     let $tdUsername = $('<td>', {
         id: `user-${user.id}`,
@@ -142,10 +131,16 @@ jQueryAjaxAdd = form => {
             data: new FormData(form),
             contentType: false,
             processData: false,
-            success: function (user) {
-                console.log(user);
-                let $tbody = $("#tblUsers");
-                $tbody.append(getTr(user));
+            success: function (response) {
+                console.log(response);
+                if (response.success) {
+                    let $tbody = $("#tblUsers");
+                    $tbody.append(getTr(response.user));
+                }
+                else {
+                    alert(`${response.errorMessage}`);
+                }
+                
             },
             error: function (err) {
                 console.log(err)

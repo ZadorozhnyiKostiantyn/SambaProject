@@ -14,6 +14,5 @@ namespace SambaProject.Data.Repository
         public Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         public TEntity? GetById(int id);
         public List<TEntity> GetAll();
-
     }
 }
