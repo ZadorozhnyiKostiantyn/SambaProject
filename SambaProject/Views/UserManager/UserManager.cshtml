@@ -1,0 +1,140 @@
+﻿@model SambaProject.Models.ViewModel.UserManagerViewModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "User Manager";
+
+    List<SelectListItem> accessRoleList = new List<SelectListItem>();
+    foreach (var accessRole in Model.AccessRoles)
+    {
+        accessRoleList.Add(new SelectListItem { Text = accessRole.Role, Value = accessRole.Id.ToString() });
+    }
+
+    SelectList selectList = new SelectList(accessRoleList, "Value", "Text");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" type="text/css" href="~/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/register.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/crud.css" />
+    <link rel="stylesheet" type="text/css" href="~/css/navBar.css" />
+</head>
+<body>
+    <nav class="sidebar-navigation">
+        <iconify-icon class="main-myButton" icon="mingcute:menu-fill" style="color: white;" width="35" height="35"></iconify-icon>
+        <ul class="content">
+            <a asp-controller="FileManager" asp-action="Index">
+                <li>
+                    <iconify-icon icon="ic:round-home" style="color: white;" width="35" height="35"></iconify-icon>
+                    <span class="tooltip">Home</span>
+                </li>
+            </a>
+            <a asp-controller="UserManager" asp-action="UserManager">
+                <li class="active">
+                    <iconify-icon icon="mdi:user" style="color: white;" width="35" height="35"></iconify-icon>
+                    <span class="tooltip">User Manager</span>
+                </li>
+            </a>
+            <a asp-controller="Authentication" asp-action="DeleteSession" style="height: 52px;">
+                <li>
+                    <iconify-icon icon="humbleicons:logout" style="color: white;" width="28" height="28"></iconify-icon>
+                    <span class="tooltip">Log out</span>
+                </li>
+            </a>
+        </ul>
+    </nav>
+
+    <div style="display: inline-block;" class="register-box">
+        <h2>Register</h2>
+        <form asp-action="CheckRegister" onsubmit="return jQueryAjaxAdd(this);">
+            <div class="user-box">
+                <input asp-for="User.Username" type="text" name="username" id="username" required>
+                <label>Username</label>
+            </div>
+
+            <div class="user-box">
+                <input asp-for="User.Password" type="password" name="password" id="password" required>
+                <label>Password</label>
+            </div>
+
+            <div class="role-select">
+                <label>Choose Access Role:</label>
+                @Html.DropDownList("AccessRoleId", selectList)
+            </div>
+            @if (TempData["ErrorMessage"] is not null)
+            {
+                <div class="alert alert-info" style="
+                    padding-bottom: 1px;
+                    padding-top: 3px;
+                    margin-bottom: 0px;
+                    height: 32px;">
+
+                    <p>@TempData["ErrorMessage"]</p>
+                </div>
+            }
+            <button id="register-btn" type="submit">Register</button>
+        </form>
+    </div>
+
+    <div style="display: inline-block;" class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Manage Users</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <form class="search-container" method="post">
+                            <input id="search-username" type="text" placeholder="Search.." name="search">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-striped table-hover" id="tblUser">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Access_Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tblUsers">
+                    @foreach (var user in Model.Users)
+                    {
+                        <tr id="tr-@user.Id">
+                            <td id="user-@user.Id">@user.Username</td>
+                            <td id="drop-down-user-@user.Id">@user.AccessRole</td>
+                            
+                            <td id="buttons-@user.Id">
+                                <a id="edit-user-@user.Id" onclick="changeTdToInputAndSelect(@user.Id, '@user.Username')" class="edit" data-toggle="modal">
+                                    <i>
+                                        <iconify-icon icon="eva:edit-outline" width="27" height="27"></iconify-icon>
+                                    </i>
+                                </a>
+                                <form asp-action="DeleteUser" asp-route-id="@user.Id" id="delete-user-@user.Id" onsubmit="return jQueryAjaxDelete(this)">
+                                    <button type="submit" class="delete" data-toggle="modal">
+                                        <i>
+                                            <iconify-icon icon="mingcute:delete-2-line" width="25" height="25"></iconify-icon>
+                                        </i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/user_manager.js"></script>
+    <script src="~/js/menu.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>
+</body>
+</html>

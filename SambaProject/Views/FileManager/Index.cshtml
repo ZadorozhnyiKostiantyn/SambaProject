@@ -1,0 +1,21 @@
+﻿<div class="container">
+    <main role="main" class="pb-3">
+		<div class="control-section">
+			<div class="sample-container">
+				<ejs-filemanager id="filemanager" allowDragAndDrop="true" allowMultiSelection="true" created="onCreated" height="500px">
+					<e-filemanager-ajaxsettings url="/FileManager/FileOperations"
+												downloadUrl="/FileManager/Download"
+												uploadUrl="/FileManager/Upload"
+												getImageUrl="/FileManager/GetImage">
+					</e-filemanager-ajaxsettings>
+					<e-filemanager-uploadsettings maxFileSize="10737418240"></e-filemanager-uploadsettings>
+				</ejs-filemanager>
+			</div>
+		</div>
+    </main>
+</div>
+
+@*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/file_manager.js"></script>
+<script src="~/js/menu.js"></script>*@
+<script src="https://code.iconify.design/iconify-icon/1.0.1/iconify-icon.min.js"></script>

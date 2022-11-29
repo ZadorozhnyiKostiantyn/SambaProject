@@ -1,9 +1,63 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Application\**" />
+    <Compile Remove="Change\**" />
+    <Compile Remove="Contracts\**" />
+    <Compile Remove="Data\Repositories\**" />
+    <Compile Remove="Testing\**" />
+    <Content Remove="Application\**" />
+    <Content Remove="Change\**" />
+    <Content Remove="Contracts\**" />
+    <Content Remove="Data\Repositories\**" />
+    <Content Remove="Testing\**" />
+    <EmbeddedResource Remove="Application\**" />
+    <EmbeddedResource Remove="Change\**" />
+    <EmbeddedResource Remove="Contracts\**" />
+    <EmbeddedResource Remove="Data\Repositories\**" />
+    <EmbeddedResource Remove="Testing\**" />
+    <None Remove="Application\**" />
+    <None Remove="Change\**" />
+    <None Remove="Contracts\**" />
+    <None Remove="Data\Repositories\**" />
+    <None Remove="Testing\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="20221025231040_FirstMigration.cs" />
+    <Compile Remove="20221025231040_FirstMigration.Designer.cs" />
+    <Compile Remove="20221028195143_SecondMigration.cs" />
+    <Compile Remove="20221028195143_SecondMigration.Designer.cs" />
+    <Compile Remove="ApplicationDbContextModelSnapshot.cs" />
+    <Compile Remove="Data\Repository\AccessRoleRepository.cs" />
+    <Compile Remove="Data\Repository\AccessRuleRepository.cs" />
+    <Compile Remove="Data\Repository\IAccessRoleRepository.cs" />
+    <Compile Remove="Data\Repository\IAccessRuleRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\UserManager\_ViewAll.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="ErrorOr" Version="1.2.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
+    <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="20.3.0.56" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
+  </ItemGroup>
 
 </Project>

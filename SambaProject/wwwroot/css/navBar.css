@@ -1,0 +1,85 @@
+﻿.main-myButton {
+    margin-top: 5px;
+    margin-left: 11px;
+    margin-bottom: -8px;
+}
+
+body {
+    overflow: hidden;
+}
+
+.content {
+    display: none;
+}
+
+.sidebar-navigation {
+    font-family: 'Lato', sans-serif;
+    line-height: 1;
+    display: inline-block;
+    min-height: 100vh;
+    width: 60px;
+    float: left;
+    margin-left: -5px;
+}
+
+    .sidebar-navigation ul {
+        text-align: center;
+        color: white;
+    }
+
+        .sidebar-navigation ul li {
+            list-style: none;
+            padding: 28px 0;
+            margin-left: -43px;
+            cursor: pointer;
+            transition: all ease-out 120ms;
+        }
+
+            .sidebar-navigation ul li i {
+                display: block;
+                font-size: 24px;
+                transition: all ease 450ms;
+            }
+
+            .sidebar-navigation ul li .tooltip {
+                display: inline-block;
+                position: absolute;
+                background-color: rgba(0,0,0,.5);
+                padding: 8px 15px;
+                border-radius: 3px;
+                margin-top: -26px;
+                left: 90px;
+                opacity: 0;
+                visibility: hidden;
+                font-size: 13px;
+                letter-spacing: 0.5px;
+            }
+
+                .sidebar-navigation ul li .tooltip:before {
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    left: -4px;
+                    top: 10px;
+                    transform: rotate(45deg);
+                    width: 10px;
+                    height: 10px;
+                    background-color: inherit;
+                }
+
+            .sidebar-navigation ul li:hover {
+                background-color: rgba(0,0,0,.5);
+            }
+
+                .sidebar-navigation ul li:hover .tooltip {
+                    visibility: visible;
+                    opacity: 1;
+                }
+
+            .sidebar-navigation ul li.active {
+                background-color: #03e9f4
+            }
+
+                .sidebar-navigation ul li.active i {
+                    color: #98d7ec;
+                }

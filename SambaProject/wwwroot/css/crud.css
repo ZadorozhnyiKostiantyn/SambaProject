@@ -1,0 +1,279 @@
+﻿.table-wrapper {
+    position: absolute;
+    top: 45%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,.5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px;
+    padding: 20px 25px;
+    margin: 30px 0;
+}
+
+.table-title {
+    padding-bottom: 15px;
+    color: #fff;
+    padding: 16px 30px;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
+}
+
+.table-title h2 {
+    margin: 5px 0 0;
+    font-size: 24px;
+}
+
+.table-title .search-container {
+    float: right;
+}
+
+.table-title .search-container input[type=text] {
+    padding: 6px;
+    
+    font-size: 13px;
+    border: none;
+    background: #fff;
+}
+
+table.table tbody, table.table thead{
+    display: block;
+    width: 620px;
+}
+
+table.table tbody{
+    height: 400px;
+    overflow: auto;
+}
+
+table.table th {
+    border-bottom: 1px solid #e8e8e8;
+}
+
+table.table tr th, table.table tr td {
+    border-color: #e9e9e9;
+    color: #fff;
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+    /*table.table tr th:first-child {
+        width: 20px;
+    }*/
+
+    table.table tr th:nth-child(1) {
+        width: 300px;
+    }
+
+    table.table tr th:nth-child(2) {
+        width: 200px;
+    }
+
+    table.table tr th:last-child {
+        width: 100px;
+    }
+
+table.table-striped.table-hover tbody tr:hover {
+    background-color: rgba(0,0,0,.5);
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    border: 1px solid #32a1ce;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #32a1ce;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #2e91b9;
+}
+
+table.table th i {
+    font-size: 13px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+table.table tr td:nth-child(1) {
+    width: 290px;
+}
+
+table.table tr td:nth-child(2) {
+    width: 200px;
+}
+
+table.table tr td:nth-child(3) {
+    width: 100px;
+}
+
+table.table td:last-child i {
+    opacity: 0.9;
+    font-size: 22px;
+    margin: 0 5px;
+}
+
+table.table td a {
+    font-weight: bold;
+    color: #566787;
+    display: inline-block;
+    text-decoration: none;
+    outline: none !important;
+}
+
+table.table td button {
+    border: none;
+    background: none;
+    display: inline-block;
+    text-decoration: none;
+    outline: none !important;
+}
+
+table.table td form {
+    all: unset !important;
+}
+
+table.table td a:hover, table.table td button:hover {
+    color: #2196F3;
+}
+
+    table.table td a.edit {
+        color: #FFC107;
+    }
+
+    table.table td button.delete {
+        color: #F44336;
+        width: 20px;
+    }
+
+table.table td i {
+    font-size: 19px;
+}
+
+/*----------------------------------------------
+---------------Drop-down list----------------
+--------------------------------------------*/
+
+table.table td label, select, option {
+    color: #fff;
+}
+
+table.table td select {
+    background-color: rgba(0,0,0,.5);
+    border: thin solid white;
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    padding: 0.5em;
+    margin: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+table.table td select.classic {
+    background-image: linear-gradient(45deg, transparent 50%, blue 50%), linear-gradient(135deg, blue 50%, transparent 50%), linear-gradient(to right, skyblue, skyblue);
+    background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), 100% 0;
+    background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
+    background-repeat: no-repeat;
+}
+
+table.table td select.classic:focus {
+    background-image: linear-gradient(45deg, white 50%, transparent 50%), linear-gradient(135deg, transparent 50%, white 50%), linear-gradient(to right, gray, gray);
+    background-position: calc(100% - 15px) 1em, calc(100% - 20px) 1em, 100% 0;
+    background-size: 5px 5px, 5px 5px, 2.5em 2.5em;
+    background-repeat: no-repeat;
+    border-color: grey;
+    outline: 0;
+}
+
+/*----------------------------------------------
+--------------------input----------------------
+--------------------------------------------*/
+
+table.table td input[type=text] {
+    background-color: rgba(0,0,0,.5);
+    color: #fff;
+    border: thin solid white;
+    border-radius: 4px;
+    display: inline-block;
+    font: inherit;
+    line-height: 1.5em;
+    margin-right: -120px;
+    padding: 0.5em 0.2em 0.5em 0.2em;
+}
+
+
+.hint-text {
+    float: left;
+    margin-top: 10px;
+    font-size: 13px;
+}
+/* Custom checkbox */
+.custom-checkbox {
+    position: relative;
+}
+
+    .custom-checkbox input[type="checkbox"] {
+        opacity: 0;
+        position: absolute;
+        margin: 5px 0 0 3px;
+        z-index: 9;
+    }
+
+    .custom-checkbox label:before {
+        width: 18px;
+        height: 18px;
+    }
+
+    .custom-checkbox label:before {
+        content: '';
+        margin-right: 10px;
+        display: inline-block;
+        vertical-align: text-top;
+        background: white;
+        border: 1px solid #bbb;
+        border-radius: 2px;
+        box-sizing: border-box;
+        z-index: 2;
+    }
+
+    .custom-checkbox input[type="checkbox"]:checked + label:after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 3px;
+        width: 6px;
+        height: 11px;
+        border: solid #000;
+        border-width: 0 3px 3px 0;
+        transform: inherit;
+        z-index: 3;
+        transform: rotateZ(45deg);
+    }
+
+    .custom-checkbox input[type="checkbox"]:checked + label:before {
+        border-color: #03A9F4;
+        background: #03A9F4;
+    }
+
+    .custom-checkbox input[type="checkbox"]:checked + label:after {
+        border-color: #fff;
+    }
+
+    .custom-checkbox input[type="checkbox"]:disabled + label:before {
+        color: #b8b8b8;
+        cursor: auto;
+        box-shadow: none;
+        background: #ddd;
+    }
