@@ -1,13 +1,11 @@
-﻿
-
-function changeTdToInputAndSelect(id, valueInput) {
+﻿function changeTdToInputAndSelect(id, valueInput) {
     $.ajax({
         type: 'GET',
         url: 'UserManager/GetAccessRoles',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (accessRoles) {
-            console.log(accessRoles);
+
             let inputId = `#user-${id}`;
             let selectId = `#drop-down-user-${id}`;
             let tdButtonsId = `#buttons-${id}`;
@@ -132,7 +130,6 @@ jQueryAjaxAdd = form => {
             contentType: false,
             processData: false,
             success: function (response) {
-                console.log(response);
                 if (response.success) {
                     let $tbody = $("#tblUsers");
                     $tbody.append(getTr(response.user));
@@ -161,7 +158,7 @@ function editUser(id, selectId) {
     formData.append("id", id);
     formData.append("username", document.querySelector(inputId).value);
     formData.append("accessRoleId", $(selectId + " option:selected").val());
-    console.log($(selectId + " option:selected").val());
+
     $.ajax({
         type: 'PUT',
         url: 'UserManager/EditUser',
@@ -170,28 +167,30 @@ function editUser(id, selectId) {
         cache: false,
         data: formData,
         success: function (user) {
-            //document.getElementById($`tr-${id}`).contentWindow.location.reload(true);
-            console.log(user);
-            let tdUsernameId = `#user-${id}`;
-            let tdAccessRoleId = `#drop-down-user-${id}`;
-            let tdButtonsId = `#buttons-${id}`;
-
-            let $aEdit, $formDelete = getEditAndDeleteButtons(id, user.username);
-         
-            // Create td colum
-            var $tdUsername = $(tdUsernameId);
-            var $tdAccessRole = $(tdAccessRoleId);
-            var $tdButtons = $(tdButtonsId);
-            
-            $tdUsername.empty();
-            document.getElementById(`user-${id}`).innerHTML = user.username;
-            $tdAccessRole.empty();
-            document.getElementById(`drop-down-user-${id}`).innerHTML = user.accessRole;
-            $tdButtons.empty()
-            $tdButtons.append($aEdit);
-            $tdButtons.append($formDelete);
+            editUserWorker(id, user)
         }
     });
+}
+
+function editUserWorker(id, user) {
+    let tdUsernameId = `#user-${id}`;
+    let tdAccessRoleId = `#drop-down-user-${id}`;
+    let tdButtonsId = `#buttons-${id}`;
+
+    let $aEdit, $formDelete = getEditAndDeleteButtons(id, user.username);
+
+    // Create td colum
+    var $tdUsername = $(tdUsernameId);
+    var $tdAccessRole = $(tdAccessRoleId);
+    var $tdButtons = $(tdButtonsId);
+
+    $tdUsername.empty();
+    document.getElementById(`user-${id}`).innerHTML = user.username;
+    $tdAccessRole.empty();
+    document.getElementById(`drop-down-user-${id}`).innerHTML = user.accessRole;
+    $tdButtons.empty()
+    $tdButtons.append($aEdit);
+    $tdButtons.append($formDelete);
 }
 
 jQueryAjaxDelete = form => {
@@ -203,8 +202,17 @@ jQueryAjaxDelete = form => {
                 data: new FormData(form),
                 contentType: false,
                 processData: false,
-                success: function (id) {
-                    $(`table tr#tr-${id}`).remove();
+                success: function (result) {
+                    if (result.editUser)
+                    {
+                        editUserWorker(result.data.id, result.data)
+                        $(`table tr#tr-${result.deleteId}`).remove();
+                    }
+                    else
+                    {
+                        $(`table tr#tr-${result.id}`).remove();
+                    }
+                    
                 },
                 error: function (err) {
                     console.log(err)

@@ -7,7 +7,7 @@ namespace SambaProject.Data.Repository
     {
         public Task AddAsync(TEntity entity);
         public Task DeleteAsync(int id);
-        public Task Update(TEntity newData);
+        public Task<TEntity> UpdateAsync(TEntity newData);
         public Task<TEntity?> GetByIdAsync(int id);
         public Task<List<TEntity>> GetAllAsync();
         public Task<List<TEntity>> SearchAsync(Expression<Func<TEntity, bool>> predicate);

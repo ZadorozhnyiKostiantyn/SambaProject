@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using SambaProject.Data;
+﻿using OneOf;
 using SambaProject.Data.Models;
 using SambaProject.Data.Repository;
 using SambaProject.Models;
@@ -15,19 +14,22 @@ namespace SambaProject.Service.UserManager.Services
         private readonly IAccessRoleService _accessRoleService;
         private readonly IJwtDecodingService _jwtDecodingService;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IParseService _parseService;
 
         public UserService(
             IRepository<User> userRepository,
             IAuthenticationService authenticationService,
             IAccessRoleService accessRoleService,
             IJwtDecodingService jwtDecodingService,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IParseService parseService)
         {
             _userRepository = userRepository;
             _authenticationService = authenticationService;
             _accessRoleService = accessRoleService;
             _jwtDecodingService = jwtDecodingService;
             _httpContextAccessor = httpContextAccessor;
+            _parseService = parseService;
         }
 
         public async Task CreateUserAsync(string userName, string password, int roleId)
@@ -38,9 +40,37 @@ namespace SambaProject.Service.UserManager.Services
                 roleId: roleId);
         }
 
-        public async Task DeleteUserAsync(int userId)
+        public async Task<OneOf<int, UserModel>> DeleteOwnerAsync(int ownerId)
         {
-            await _userRepository.DeleteAsync(userId);
+            await _userRepository.DeleteAsync(ownerId);
+            if (await _userRepository.SingleOrDefaultAsync(u => u.AccessRoleId != 1) is null)
+            {
+                return ownerId;
+            }
+
+            if (await _userRepository.SingleOrDefaultAsync(u => u.AccessRoleId == 2) is User user)
+            {
+                return _parseService.ParseUserToUserModel(await UpdateUserAsync(
+                    new User
+                    {
+                        Id = user.Id,
+                        Username = user.Username,
+                        Password = user.Password,
+                        AccessRoleId = 1
+
+                    }));
+            }
+            return ownerId;
+        }
+
+        public async Task<OneOf<int, UserModel>> DeleteUserAsync(int userId)
+        {
+            if (_userRepository.GetById(userId)?.AccessRoleId != 1)
+            {
+                await _userRepository.DeleteAsync(userId);
+                return userId;
+            }
+            return await DeleteOwnerAsync(userId);
         }
 
         public async Task<List<User>> GetAllUsersAsync()
@@ -65,38 +95,20 @@ namespace SambaProject.Service.UserManager.Services
 
         public async Task<List<UserModel>> SearchAsync(string query)
         {
-            List<User> users;
 
-            if (string.IsNullOrEmpty(query))
+            if (!string.IsNullOrEmpty(query))
             {
-                users = await _userRepository.GetAllAsync();
-            }
-            else
-            {
-                users = await _userRepository.SearchAsync(u => u.Username!.Contains(query));
+                return _parseService
+                    .ParseUserToUserModel(await _userRepository.SearchAsync(u => u.Username!.Contains(query)));
             }
 
-            List<UserModel> result = new List<UserModel>();
-
-            foreach (var user in users)
-            {
-                result.Add(
-                    new UserModel
-                    {
-                        Id = user.Id,
-                        Username = user.Username,
-                        AccessRole = _accessRoleService.GetRoleById(user.AccessRoleId).Role
-                    }
-                );
-            }
-
-            return result;
+            return _parseService.ParseUserToUserModel(await _userRepository.GetAllAsync());
 
         }
 
-        public async Task UpdateUserAsync(User newData)
+        public async Task<User> UpdateUserAsync(User newData)
         {
-            await _userRepository.Update(newData);
+             return await _userRepository.UpdateAsync(newData);
         }
     }
 }

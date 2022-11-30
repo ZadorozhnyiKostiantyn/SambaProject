@@ -170,8 +170,7 @@ namespace SambaProject.Controllers
 
         public IActionResult Index()
         {
-            return View(_userService.GetUserByToken().AccessRole == "Owner"
-                || _userService.GetUserByToken().AccessRole == "Admin" ? true : false);
+            return View(_userService.GetUserByToken().AccessRole == "Owner" ? true : false);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
