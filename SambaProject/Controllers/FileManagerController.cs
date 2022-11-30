@@ -117,27 +117,30 @@ namespace SambaProject.Controllers
                 string newPath = path;
                 FileManagerResponse uploadResponse;
 
-                foreach (var file in uploadFiles)
+                if(uploadFiles is not null)
                 {
-                    // Назва папки/назва файлу
-                    var folders = (file.FileName).Split('/');
-
-                    // checking the folder upload
-                    if (folders.Length > 1)
+                    foreach (var file in uploadFiles)
                     {
-                        for (var i = 0; i < folders.Length - 1; i++)
+                        var folders = (file.FileName).Split('/');
+
+                        // checking the folder upload
+                        if (folders.Length > 1)
                         {
-                            string newDirectoryPath = Path.Combine(newPath, folders[i]);
-                            if (!Directory.Exists(newDirectoryPath))
+                            for (var i = 0; i < folders.Length - 1; i++)
                             {
-                                operation.ToCamelCase(operation.Create(newPath, folders[i]));
+                                string newDirectoryPath = Path.Combine(newPath, folders[i]);
+                                if (!Directory.Exists(newDirectoryPath))
+                                {
+                                    operation.ToCamelCase(operation.Create(newPath, folders[i]));
+                                }
+                                newPath += folders[i] + "/";
                             }
-                            newPath += folders[i] + "/";
                         }
                     }
-                }
 
-                uploadResponse = operation.Upload(path, uploadFiles, action, null);
+                    uploadResponse = operation.Upload(path, uploadFiles, action, null);
+                }
+                
                 return Content("");
             }
         }
