@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SambaProject.Data.Models;
-using SambaProject.Models;
 using SambaProject.Attributes;
 using SambaProject.Error;
 using SambaProject.Service.Authentication.Interface;
@@ -10,21 +9,24 @@ using SambaProject.Models.ViewModel;
 namespace SambaProject.Controllers
 {
     [AuthorizeUser]
-    [AccessRole("access_role", "Owner", "Admin")]
+    [AccessRole("access_role", "Owner")]
     public class UserManagerController : Controller
     {
         private readonly IAuthenticationService _authenticationService;
         private readonly IUserService _userService;
         private readonly IAccessRoleService _accessRoleService;
+        private readonly IParseService _parseService;
 
         public UserManagerController(
             IAuthenticationService authenticationService,
             IUserService userService,
-            IAccessRoleService accessRoleService)
+            IAccessRoleService accessRoleService,
+            IParseService parseService)
         {
             _authenticationService = authenticationService;
             _userService = userService;
             _accessRoleService = accessRoleService;
+            _parseService = parseService;
         }
 
         [Route("UserManager", Name = "UserManager")]
@@ -57,12 +59,7 @@ namespace SambaProject.Controllers
                 new
                 {
                     success = true, 
-                    user = new UserModel
-                    {
-                        Id = newUser.Id,
-                        Username = user.Username,
-                        AccessRole = _accessRoleService.GetRoleById(user.AccessRoleId).Role
-                    }
+                    user = _parseService.ParseUserToUserModel(newUser),
                 }
                 
             );
@@ -77,37 +74,40 @@ namespace SambaProject.Controllers
         [HttpPut]
         public async Task<IActionResult> EditUser(IFormCollection value)
         {
-            Console.WriteLine(Int32.Parse(value["id"]));
-            Console.WriteLine(value["username"]);
-            Console.WriteLine(value["accessRoleId"]);
             var user = await _userService.GetUserByIdAsync(Int32.Parse(value["id"]));
-            var newData = new User
-            {
-                Id = Int32.Parse(value["id"]),
-                Username = value["username"],
-                Password = user.Password,
-                AccessRoleId = Int16.Parse(value["accessRoleId"])
-            };
-            await _userService.UpdateUserAsync(newData);
+            //var role = _accessRoleService.GetRoleById(Int32.Parse(value["accessRoleId"]));
 
-            var role = _accessRoleService.GetRoleById(Int16.Parse(value["accessRoleId"]));
+            var newData = await _userService.UpdateUserAsync(
+                new User
+                {
+                    Id = Int32.Parse(value["id"]),
+                    Username = value["username"],
+                    Password = user.Password,
+                    AccessRoleId = Int32.Parse(value["accessRoleId"])
+                }
+            );
 
-            UserModel newUser = new UserModel
-            {
-                Id = newData.Id,
-                Username = newData.Username,
-                AccessRole = role.Role
-            };
-
-            return Json(newUser);
+            return Json(_parseService.ParseUserToUserModel(newData));
         }
 
         // DELETE: Users/Delete/5
         [HttpDelete]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            await _userService.DeleteUserAsync(id);
-            return Json(id);
+            var deleteResult = await _userService.DeleteUserAsync(id);
+
+            if(deleteResult.IsT1)
+            {
+                return Json(
+                    new
+                    {
+                        editUser = true,
+                        deleteId = id,
+                        data = deleteResult.AsT1
+                    });
+            }
+
+            return Json(new { editUser = false, id = deleteResult.AsT0 });
         }
 
         [HttpGet]

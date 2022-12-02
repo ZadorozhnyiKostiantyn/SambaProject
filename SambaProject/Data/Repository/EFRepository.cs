@@ -58,14 +58,16 @@ namespace SambaProject.Data.Repository
 
         public async Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
         {
-            return await _context.Set<TEntity>().SingleOrDefaultAsync(predicate);
+            return await _context.Set<TEntity>().FirstOrDefaultAsync(predicate);
         }
 
-        public async Task Update(TEntity newData)
+        public async Task<TEntity> UpdateAsync(TEntity newData)
         {
             var entity = await _context.Set<TEntity>().FindAsync(newData.Id);
             _context.Entry(entity).CurrentValues.SetValues(newData);
             await _context.SaveChangesAsync();
+
+            return newData;
         }
     }
 }

@@ -47,6 +47,7 @@ namespace SambaProject.Data
             services.AddScoped<IAccessRoleService, AccessRoleService>();
             services.AddScoped<IAccessRuleService, AccessRuleService>();
             services.AddScoped<IJwtDecodingService, JwtDecodingService>();
+            services.AddScoped<IParseService, ParseService>();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             return services;
